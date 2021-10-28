@@ -753,20 +753,22 @@ function updateFieldIfNotNull(fieldName, value, precision=2){
 
 
          // On and off Drumpattern1
-         if ((buttonDrums == false) && (yDotValues < 15) && (xDotValues < 15))
+         if ((buttonDrums == true) && (yDotValues < 15) && (xDotValues < 15))
          document.getElementById("rectangle_drums").innerHTML = "Drums: on",
- 
-         synth6.connect(autoWah),
+         pattern5.mute = false,
+         pattern6.mute = false,
+
          rectangle_drums.style.opacity = 1,
          rectangle_drums.style.background = "#1100ff52",
  
          setTimeout(myTimeout8, 2000);
          //updateFieldIfNotNull('pitchwheel', pitchShift.pitch);
  
-         else if ((buttonDrums == true) && (yDotValues < 15) && (xDotValues < 15))
+         else if ((buttonDrums == false) && (yDotValues < 15) && (xDotValues < 15))
          document.getElementById("rectangle_drums").innerHTML = "Drums: off",
  
-         synth6.disconnect(autoWah),
+         pattern5.mute = true,
+         pattern6.mute = true,
          rectangle_drums.style.opacity = 0.2,
          setTimeout(myTimeout9, 2000);
 
