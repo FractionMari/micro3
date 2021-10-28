@@ -253,7 +253,9 @@ function updateFieldIfNotNull(fieldName, value, precision=2){
     // multiplying with 5 to get values from 0-100
     let xDotValues = (((event.accelerationIncludingGravity.x * -1) + 10) * 5);
     // multiplying with 5 to get values from 0-100
-    let yDotValues = ((event.accelerationIncludingGravity.y  + 10) * 5);
+    let yDotValues = (((event.accelerationIncludingGravity.y * -1)  + 10) * 5);
+
+    //let yDotValues = ((event.accelerationIncludingGravity.y  + 10) * 5);
     elem.style.top = yDotValues + '%'; 
     elem.style.left = xDotValues + '%'; 
 
