@@ -190,9 +190,9 @@ function updateFieldIfNotNull(fieldName, value, precision=2){
     let pitchWheel = event.accelerationIncludingGravity.y;
     
     // Updating values to HTML
-    updateFieldIfNotNull('test_x', event.acceleration.x);
-    updateFieldIfNotNull('test_y', event.acceleration.y);
-    updateFieldIfNotNull('test_z', event.acceleration.z);
+    updateFieldIfNotNull('test_x', xValue);
+    updateFieldIfNotNull('test_y', yValue);
+    updateFieldIfNotNull('test_z', zValue);
     updateFieldIfNotNull('total_acc', totAcc);
 
     updateFieldIfNotNull('Accelerometer_gx', event.accelerationIncludingGravity.x);
@@ -239,7 +239,6 @@ function updateFieldIfNotNull(fieldName, value, precision=2){
     if (/windows phone/i.test(userAgent)) {
       xDotValues = ((event.accelerationIncludingGravity.x + 10) * 5);
       yDotValues = (((event.accelerationIncludingGravity.y * -1)  + 10) * 5);
-
   }
 
   if (/android/i.test(userAgent)) {
