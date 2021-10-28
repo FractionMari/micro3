@@ -1,10 +1,11 @@
+var userAgent = navigator.userAgent || navigator.vendor || window.opera;
 
 // Tone.js parameters:
 const gainNode = new Tone.Gain().toDestination();
 const pingPong = new Tone.PingPongDelay().connect(gainNode);
 const phaser = new Tone.Phaser().connect(gainNode);
 const autoWah = new Tone.AutoWah(50, 6, -30).connect(gainNode);
-var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
 
 let buttonOn = 3;
 let buttonOn2 = false;
@@ -252,13 +253,9 @@ function updateFieldIfNotNull(fieldName, value, precision=2){
     yDotValues = ((event.accelerationIncludingGravity.y  + 10) * 5);
   }
 
-
-
-
     elem.style.top = yDotValues + '%'; 
     elem.style.left = xDotValues + '%'; 
 
- 
 
 
     updateFieldIfNotNull('x_dots', xDotValues);

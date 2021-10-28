@@ -26,7 +26,7 @@
 // tidying up, and trying to create a more musical loop rather than random?
 
 // 8. october Finishing the second iteration. applying some viusal feedback.
-
+var userAgent = navigator.userAgent || navigator.vendor || window.opera;
 
 // Tone.js parameters:
 const gainNode = new Tone.Gain().toDestination();
@@ -616,18 +616,36 @@ function updateFieldIfNotNull(fieldName, value, precision=2){
 
     //gainNode.gain.rampTo(newAcc2, 0.1);
     //Tone.Transport.bpm.rampTo(tempo, 0.5);
-
     ////////////////////////////////////////////
-    ///////// Red Dot Monitoring in GUI ///////
+    ///////// Blue Dot Monitoring in GUI ///////
     ///////////////////////////////////////////
+   
 
+   // iOs devices flip the gyroscope axis, so thanks to this thread to be able to adapt
+   // to diffrent OSes:
+    // https://stackoverflow.com/questions/21741841/detecting-ios-android-operating-system
+    //// Both x and Y axis: multiplying with 5 to get values from 0-100 ////
+    let xDotValues;
+    let yDotValues;
+    if (/windows phone/i.test(userAgent)) {
+      xDotValues = ((event.accelerationIncludingGravity.x + 10) * 5);
+      yDotValues = (((event.accelerationIncludingGravity.y * -1)  + 10) * 5);
 
-    // multiplying with 5 to get values from 0-100
-    let xDotValues = (((event.accelerationIncludingGravity.x * -1) + 10) * 5);
-    // multiplying with 5 to get values from 0-100
-    let yDotValues = ((event.accelerationIncludingGravity.y  + 10) * 5);
+  }
+
+  if (/android/i.test(userAgent)) {
+    xDotValues = ((event.accelerationIncludingGravity.x + 10) * 5);
+    yDotValues = (((event.accelerationIncludingGravity.y * -1)  + 10) * 5);
+  }
+
+  // iOS detection from: http://stackoverflow.com/a/9039885/177710
+  if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+    xDotValues = (((event.accelerationIncludingGravity.x * -1) + 10) * 5);
+    yDotValues = ((event.accelerationIncludingGravity.y  + 10) * 5);
+  }
+
     elem.style.top = yDotValues + '%'; 
-    elem.style.left = xDotValues + '%';  
+    elem.style.left = xDotValues + '%'; 
 
     updateFieldIfNotNull('x_dots', xDotValues);
     updateFieldIfNotNull('y_dots', yDotValues);
