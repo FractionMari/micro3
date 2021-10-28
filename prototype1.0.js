@@ -215,11 +215,11 @@ function updateFieldIfNotNull(fieldName, value, precision=2){
     // Switch between inverted and non-inverted volume-control, 
     // and visual feedback indicated by the opacity of the element in GUI
     if (inverse == false)
-    gainNode.gain.rampTo(newAcc2, 0.2);
+    gainNode.gain.rampTo(newAcc2, 0.1);
     //elem.style.opacity = newAcc2; //Uncomment to map the opacity of red dot to motion
     else
     // more smooth change of volume:
-    gainNode.gain.rampTo(newAcc, 0.2);
+    gainNode.gain.rampTo(newAcc, 0.1);
     //elem.style.opacity = newAcc; //Uncomment to map the opacity of red dot to motion
        
     ////////////////////////////////////////////
