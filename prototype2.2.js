@@ -46,6 +46,8 @@ let buttonOn2 = false;
 let buttonOn3 = false;
 let buttonOn4 = false;
 let buttonOn5 = false;
+let buttonDrums = true;
+let buttonEffects = true;
 
 let synth4pitch;
 
@@ -539,30 +541,6 @@ Tone.Transport.bpm.value = 40;
 
 
 
-/* var pattern = new Tone.Pattern(function(time, note){
-	synth.triggerAttackRelease(note, 0.5);
-}, randomArray);
-var pattern2 = new Tone.Pattern(function(time, note){
-	synth2.triggerAttackRelease(note, 0.5);
-}, randomArray2);
-var pattern3 = new Tone.Pattern(function(time, note){
-	synth3.triggerAttackRelease(note, 0.5);
-}, randomArray3);
-
-var pattern5 = new Tone.Pattern(function(time, note){
-	synth5.triggerAttackRelease(note, 0.5);
-}, ["C1", ["D1", "D1"], "E3", "C1"]);
-
-pattern.start();
-pattern2.start();
-pattern3.start();
-pattern5.start();
-pattern.mute = false;
-pattern2.mute = true;
-pattern3.mute = true;
-pattern5.mute = false; */
-
-
 // With this function the values won't go below a threshold 
 function clamp(min, max, val) {
   return Math.min(Math.max(min, +val), max);
@@ -701,6 +679,22 @@ function updateFieldIfNotNull(fieldName, value, precision=2){
         function myTimeout6() {
           buttonOn3 = false;
         }
+
+        function myTimeout8() {
+          buttonDrums = true;
+        }
+
+        function myTimeout9() {
+          buttonDrums = false;
+        }
+
+        function myTimeout10() {
+          buttonEffects = true;
+        }
+
+        function myTimeout11() {
+          buttonEffects = false;
+        }
     
 
 
@@ -724,6 +718,7 @@ function updateFieldIfNotNull(fieldName, value, precision=2){
         rectangle6.style.opacity = 0.2,
         setTimeout(myTimeout2, 2000);
 
+        // On and off Pattern2
         if ((buttonOn2 == false) &&(yDotValues < 50) && (yDotValues > 32) && (xDotValues > 75))
         document.getElementById("rectangle7").innerHTML = "Synth2: on",
         synth2.connect(autoWah),
@@ -755,6 +750,25 @@ function updateFieldIfNotNull(fieldName, value, precision=2){
         synth5.disconnect(autoWah),
         rectangle8.style.opacity = 0.2,
         setTimeout(myTimeout6, 2000);
+
+
+         // On and off Drumpattern1
+         if ((buttonDrums == false) && (yDotValues < 15) && (xDotValues > 15))
+         document.getElementById("rectangle_drums").innerHTML = "Drums: on",
+ 
+         synth6.connect(autoWah),
+         rectangle_drums.style.opacity = 1,
+         rectangle_drums.style.background = "#1100ff52",
+ 
+         setTimeout(myTimeout8, 2000);
+         //updateFieldIfNotNull('pitchwheel', pitchShift.pitch);
+ 
+         else if ((buttonDrums == true) && (yDotValues < 15) && (xDotValues > 15))
+         document.getElementById("rectangle_drums").innerHTML = "Drums: off",
+ 
+         synth6.disconnect(autoWah),
+         rectangle_drums.style.opacity = 0.2,
+         setTimeout(myTimeout9, 2000);
 
 /*         // On and off Pattern2
         if ((yDotValues < 50) && (yDotValues > 32) && (xDotValues > 75))

@@ -683,6 +683,36 @@ color: white;
     border-radius: 10px; 
   }
 
+  .rectangle_drums {
+    position: absolute;
+    top: 0%;
+    left: 0px;
+    height: 20%;
+    width: 20%;
+    background-color: #d9ff00c5;
+    font-size: 100%;
+    text-align: center;
+    color:rgba(0, 0, 0, 0.767);
+    border:4px solid black; 
+    border-radius: 10px; 
+  }
+
+  .effects {
+    position: absolute;
+    top: 33%;
+    left: 0px;
+    height: 20%;
+    width: 20%;
+    background-color: #d9ff00c5;
+    font-size: 100%;
+    text-align: center;
+    color:rgba(0, 0, 0, 0.767);
+    border:4px solid black; 
+    border-radius: 10px; 
+  }
+
+  
+
   .monitoring {
     position: absolute;
     z-index: -1;
