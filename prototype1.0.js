@@ -1,26 +1,3 @@
-function getMobileOperatingSystem() {
-  var userAgent = navigator.userAgent || navigator.vendor || window.opera;
-
-  // Windows Phone must come first because its UA also contains "Android"
-  if (/windows phone/i.test(userAgent)) {
-      return "Windows Phone";
-  }
-
-  if (/android/i.test(userAgent)) {
-      return "Android";
-  }
-
-  // iOS detection from: http://stackoverflow.com/a/9039885/177710
-  if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-      return "iOS";
-  }
-
-  return "unknown";
-}
-
-document.getElementById("OS").innerHTML = getMobileOperatingSystem();
-
-
 
 // Tone.js parameters:
 const gainNode = new Tone.Gain().toDestination();
@@ -250,7 +227,11 @@ function updateFieldIfNotNull(fieldName, value, precision=2){
     ////////////////////////////////////////////
     ///////// Blue Dot Monitoring in GUI ///////
     ///////////////////////////////////////////
+   
 
+   // iOs devices flip the gyroscope axis, so thanks to this thread to be able to adapt
+   // to diffrent OSes:
+    // https://stackoverflow.com/questions/21741841/detecting-ios-android-operating-system
     //// Both x and Y axis: multiplying with 5 to get values from 0-100 ////
     let xDotValues;
     let yDotValues;
