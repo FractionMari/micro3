@@ -46,6 +46,8 @@ let buttonOn2 = false;
 let buttonOn3 = false;
 let buttonOn4 = false;
 let buttonOn5 = false;
+let buttonDrums = true;
+let buttonEffects = true;
 
 let synth4pitch;
 
@@ -678,6 +680,21 @@ function updateFieldIfNotNull(fieldName, value, precision=2){
           buttonOn3 = false;
         }
 
+        function myTimeout8() {
+          buttonDrums = true;
+        }
+
+        function myTimeout9() {
+          buttonDrums = false;
+        }
+
+        function myTimeout10() {
+          buttonEffects = true;
+        }
+
+        function myTimeout11() {
+          buttonEffects = false;
+        }
     
 
 
@@ -733,6 +750,27 @@ function updateFieldIfNotNull(fieldName, value, precision=2){
         synth5.disconnect(autoWah),
         rectangle8.style.opacity = 0.2,
         setTimeout(myTimeout6, 2000);
+
+
+         // On and off Drumpattern1
+         if ((buttonDrums == true) && (yDotValues < 15) && (xDotValues < 15))
+         document.getElementById("rectangle_drums").innerHTML = "Drums: on",
+         pattern5.mute = false,
+         pattern6.mute = false,
+
+         rectangle_drums.style.opacity = 1,
+         rectangle_drums.style.background = "#1100ff52",
+ 
+         setTimeout(myTimeout8, 2000);
+         //updateFieldIfNotNull('pitchwheel', pitchShift.pitch);
+ 
+         else if ((buttonDrums == false) && (yDotValues < 15) && (xDotValues < 15))
+         document.getElementById("rectangle_drums").innerHTML = "Drums: off",
+ 
+         pattern5.mute = true,
+         pattern6.mute = true,
+         rectangle_drums.style.opacity = 0.2,
+         setTimeout(myTimeout9, 2000);
 
 /*         // On and off Pattern2
         if ((yDotValues < 50) && (yDotValues > 32) && (xDotValues > 75))
