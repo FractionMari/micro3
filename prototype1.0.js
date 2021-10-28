@@ -180,10 +180,42 @@ function updateFieldIfNotNull(fieldName, value, precision=2){
 // Function for handling motion
   function handleMotion(event) {
 
+        ////////////////////////////////////////////
+    ///////// Blue Dot Monitoring in GUI ///////
+    ///////////////////////////////////////////
+   
+
+   // iOs devices flip the gyroscope axis, so thanks to this thread to be able to adapt
+   // to diffrent OSes:
+    // https://stackoverflow.com/questions/21741841/detecting-ios-android-operating-system
+    //// Both x and Y axis: multiplying with 5 to get values from 0-100 ////
+    let xDotValues;
+    let yDotValues;
+    let zValue;
+    if (/windows phone/i.test(userAgent)) {
+      xDotValues = ((event.accelerationIncludingGravity.x + 10) * 5);
+      yDotValues = (((event.accelerationIncludingGravity.y * -1)  + 10) * 5);
+      zValue = event.acceleration.z - 0.3;
+  }
+
+  if (/android/i.test(userAgent)) {
+    xDotValues = ((event.accelerationIncludingGravity.x + 10) * 5);
+    yDotValues = (((event.accelerationIncludingGravity.y * -1)  + 10) * 5);
+    zValue = event.acceleration.z - 0.3;
+  }
+
+  // iOS detection from: http://stackoverflow.com/a/9039885/177710
+  if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+    xDotValues = (((event.accelerationIncludingGravity.x * -1) + 10) * 5);
+    yDotValues = ((event.accelerationIncludingGravity.y  + 10) * 5);
+    zValue = event.acceleration.z;
+  }
+
+
     // variables for rotation, GUI monitoring and volume control
     let xValue = event.acceleration.x; 
     let yValue = event.acceleration.y; 
-    let zValue = event.acceleration.z - 0.3;
+    
     let totAcc = (Math.abs(xValue) + Math.abs(yValue) + Math.abs(zValue));
     let elem = document.getElementById("myAnimation"); 
     let filterWheel = event.accelerationIncludingGravity.x;
@@ -222,35 +254,9 @@ function updateFieldIfNotNull(fieldName, value, precision=2){
     //elem.style.opacity = newAcc2; //Uncomment to map the opacity of red dot to motion
     else
     // more smooth change of volume:
-    gainNode.gain.rampTo(newAcc, 0.1);
+    gainNode.gain.rampTo(newAcc, 0.3);
     //elem.style.opacity = newAcc; //Uncomment to map the opacity of red dot to motion
        
-    ////////////////////////////////////////////
-    ///////// Blue Dot Monitoring in GUI ///////
-    ///////////////////////////////////////////
-   
-
-   // iOs devices flip the gyroscope axis, so thanks to this thread to be able to adapt
-   // to diffrent OSes:
-    // https://stackoverflow.com/questions/21741841/detecting-ios-android-operating-system
-    //// Both x and Y axis: multiplying with 5 to get values from 0-100 ////
-    let xDotValues;
-    let yDotValues;
-    if (/windows phone/i.test(userAgent)) {
-      xDotValues = ((event.accelerationIncludingGravity.x + 10) * 5);
-      yDotValues = (((event.accelerationIncludingGravity.y * -1)  + 10) * 5);
-  }
-
-  if (/android/i.test(userAgent)) {
-    xDotValues = ((event.accelerationIncludingGravity.x + 10) * 5);
-    yDotValues = (((event.accelerationIncludingGravity.y * -1)  + 10) * 5);
-  }
-
-  // iOS detection from: http://stackoverflow.com/a/9039885/177710
-  if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-    xDotValues = (((event.accelerationIncludingGravity.x * -1) + 10) * 5);
-    yDotValues = ((event.accelerationIncludingGravity.y  + 10) * 5);
-  }
 
     elem.style.top = yDotValues + '%'; 
     elem.style.left = xDotValues + '%'; 
