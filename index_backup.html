@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
+    <title>Micro App Prototype 2</title>
+    <link href="micro2.css" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Rowdies' rel='stylesheet'>
+    
+
+</head>
+
+<script src="https://tonejs.github.io/build/Tone.js"></script>
+
+<body onload="createRandomness()">
+
+    <button type="button" class="collapsible" id="helpButton">?</button>
+   
+    <div class="content">
+      <p>How to use this app:
+        <br>
+          <div class="dots">
+    
+            <li> This app must be used on a phone/tablet</li>
+            <li> This app uses motion to be controlled</li>
+            <li> Press button below to start </li>
+            <li> Tilt your phone to activate/deactivate random loops</li>
+            <li> Tilt your phone to control effects</li>
+            <li> The speed of the loop goes down when you move your phone. </li>
+            <li> Use the Inverse button to get the opposite effect. </li>
+</div>
+      </p>
+    </div> 
+    <h2>Micro 2.0</h2>
+    <div id="container3">
+
+ <div id="microContainer3">
+ <canvas id="myContainer3" width="130" height="80" style="border:1px solid #d3d3d3;">Your browser does not support the HTML5 canvas tag.</canvas>
+<div id ="myContainer3">
+<div id ="myAnimation3">
+</div></div>
+<img class='img3' src="assets/micro5.png" width="250">
+</img>
+
+</div>
+<br>
+    <div id="loops">
+    <button id="looper1">Press to start</button>
+    <button id="button2">Inverse: ON</button><br>
+    </div>
+
+
+    
+    <div id="container7">
+        <span id="filterwheel">0</span>
+        <span id="pitchwheel">0</span> <br>
+    Volume: <br>
+    <span id="volume_acc">0</span><br> 
+        Short side tilt<br>
+      Y dots: <br> <span id="y_dots">0</span><span>&deg;</span><br> 
+    Long side Tilt <br>
+      X dots: <br> <span id="x_dots">0</span><span>&deg;</span><br> 
+
+    <span id="volume_acc2">0</span><br> 
+ <li>X-axis: <span id="Accelerometer_gx">0</span><span> m/s<sup>2</sup></span></li>
+  <li>Y-axis: <span id="Accelerometer_gy">0</span><span> m/s<sup>2</sup></span></li>
+    <li>Z-axis: <span id="Accelerometer_gz">0</span><span> m/s<sup>2</sup></span></li>
+X-axis (&beta;): <span id="Orientation_b">0</span><span>&deg;</span>
+Y-axis (&gamma;): <span id="Orientation_g">0</span><span>&deg;</span>
+Z-axis (&alpha;): <span id="Orientation_a">0</span><span>&deg;</span>
+X-axis: <span id="test_x">0</span>
+
+Y-axis: <span id="test_y">0</span>
+
+Z-axis: <span id="test_z">0</span>
+
+Total acc: <span id="total_acc">0</span>
+Total filter: <span id="total_filter">0</span>
+Difference: <span id="diff_acc">0</span>
+
+</div>
+
+
+    </div>
+    <a href="./feedback.html">Feedback?</a>
+     <a href= "https://github.com/FractionMari/micro"><img src="./assets/GitHub-Mark-Light-64px.png" width="10%"></a>
+     <a rel="license"
+     href="http://creativecommons.org/licenses/by-nc/4.0/">
+     <img alt="Creative Commons License" style="border-width:0" 
+     src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" /></a>
+     <br />
+
+
+</main>
+<script>
+    var coll = document.getElementsByClassName("collapsible");
+    var i;
+    
+    for (i = 0; i < coll.length; i++) {
+      coll[i].addEventListener("click", function() {
+        this.classList.toggle("active");
+        var content = this.nextElementSibling;
+        if (content.style.display === "block") {
+          content.style.display = "none";
+        } else {
+          content.style.display = "block";
+        }
+      });
+    }
+    </script>
+<script src="prototype2.0.js"></script>
+
+
+</body>
+</html>

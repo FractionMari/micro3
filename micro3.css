@@ -1,0 +1,247 @@
+body {
+    margin: 0px;
+    font-family: 'Happy Monkey', cursive;
+    font-size: 30px;
+    letter-spacing: 2px;
+    word-spacing: 2px;
+    color: #000000;
+    font-weight: 700;
+    text-decoration: none;
+    font-style: normal;
+    font-variant: small-caps;
+    text-transform: none;
+	text-align: center;
+    background-color: #000000;
+    font-size: 140%;
+    color: #ffffff;
+    
+    }
+    #loops {
+    
+        display: inline-block;
+        vertical-align:middle;
+        position: absolute;
+        left:0px;
+        top:0px;
+        width:100%;
+        height:100%;
+        border: 0px rgba(0, 0, 0, 0) solid;
+    }
+    
+#looper1 {
+   
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    background-color: rgba(0, 233, 8, 0.269);
+    
+}
+
+#button2 {
+   
+    width: 100px;
+    height: 50px;
+    box-sizing: border-box;
+    background-color: rgba(0, 233, 8, 0.269);
+    
+}
+#looper1:hover {
+    background-color:  rgba(228, 220, 220, 0);
+    
+    }
+
+button  {
+    background-color: rgba(169, 255, 176, 0.084);
+    font-family: 'Raleway', sans-serif;
+    border-radius: 17px;
+    color: #00ff15;
+    padding: 5px 10px;
+
+    height: 50px;
+   
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;
+    box-sizing: border-box;
+    }
+
+button:hover {
+    background-color:  rgba(228, 220, 220, 0);
+    
+    }
+
+
+a {
+    color: rgb(0, 255, 0);
+    }
+
+a:hover {
+    color: rgb(173, 255, 173);
+    }
+a:visited {
+    color: rgb(0, 99, 0);
+    }
+
+
+
+
+#container3 {
+    font-family: 'Raleway', sans-serif;
+    margin: auto;
+    width: 100%;
+    max-width:500px;
+    height: 100%;
+    background: rgba(0, 0, 0, 0);
+    padding: 0px;
+    border: 0px rgb(0, 0, 0) solid;
+/*     background-image: url("assets/bg8.jpg"); */
+    color: rgb(68, 7, 38) solid;
+    background-size: cover;
+
+    }
+
+
+
+#container7 {
+
+    font-size: 0px;
+    color: #ffffff00;
+    }
+
+
+
+#pitchBox {
+    display: inline-block;
+    vertical-align:middle;
+    width:auto;
+    max-width:140px;
+    height:auto;
+    max-height:200px;
+    border: 1px rgba(0, 0, 0, 0) solid; 
+
+}
+
+
+
+
+
+#github-img {
+    position: absolute;
+    top: 25px;
+    left: 10px;
+    height: auto;
+}
+
+
+#numbers  {
+
+    font-size: 10px;
+
+    }
+    
+  #myAnimation3 {
+    width: 20px;
+    height: 20px;
+
+    position: absolute;
+    border-radius: 50px;
+    background-color: rgb(0, 255, 0);
+    opacity: 100; /* make this 0 if it is mapped to movement */
+
+  }
+
+
+#microContainer3 {
+
+    position: relative; 
+
+
+    width: 300px; 
+    height: 160px;
+    z-index: -1;
+
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+  }
+
+  #myContainer3 {
+
+    width:300px; 
+    height:160px;
+    top: 0px;
+    left: 0px;
+    background: rgba(255, 255, 255, 0); 
+    position:absolute; 
+
+    border:0px solid black; 
+    border-radius: 0px; 
+    box-shadow: 0 5px 50px #52525277;
+
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+
+  }
+
+
+.img3 {
+    position:absolute; 
+    top: 0px;
+    left: 0px;
+    z-index: -1;
+
+}
+
+#about {
+    position:absolute; 
+    bottom: 0px;
+    z-index: -1;
+}
+
+#feedback{
+    position:absolute; 
+    top: 0px;
+    left: 0px;
+
+    z-index: 1;
+}
+
+
+/* Animation for gradually disappearing box with instructions. Thanks to https://stackoverflow.com/questions/39513705/make-html-element-disappear-with-css-animation */
+
+@keyframes myAnimation{
+    0%{
+      opacity: 0.9;
+      transform: rotateX(90deg);
+    }
+    50%{
+      opacity: 0.5;
+      transform: rotateX(0deg);
+    }
+    100%{
+      display: none;
+      opacity: 0;
+      transform: rotateX(90deg);
+    }
+  }
+  
+  #myelement{
+    position: absolute;
+    top: 0px;
+    left: 000px;
+    height: 900px;
+    width: 700px;
+    background-color: #000000;
+    text-align: center;
+    color:rgb(255, 255, 255);
+    
+      animation-name: myAnimation;
+      animation-duration: 30000ms;
+      animation-fill-mode: forwards;
+  
+  }

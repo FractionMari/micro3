@@ -1,0 +1,700 @@
+body {
+    margin: 0px;
+    font-family: 'Happy Monkey', cursive;
+    font-size: 30px;
+    letter-spacing: 2px;
+    word-spacing: 2px;
+    color: #000000;
+    font-weight: 700;
+    text-decoration: none;
+    font-style: normal;
+    font-variant: small-caps;
+    text-transform: none;
+	text-align: center;
+    background-color: #000000;
+    font-size: 140%;
+    color: #ffffff;
+    
+    }
+
+button  {
+    background-color: #333;
+    font-family: 'Rowdies';
+    border-radius: 17px;
+    color: #ffffff;
+    padding: 5px 10px;
+
+    height: 50px;
+    font-variant: small-caps;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 13px;
+    }
+
+button:hover {
+    background-color:  rgba(0, 0, 0, 0.452);
+    
+    }
+
+.AMbuttons  {
+    background-color: #0000004d;
+    font-family: 'Rowdies';
+    border-radius: 17px;
+    color: #ccde07;
+    padding: 10px 20px;
+    text-align: center;
+    font-variant: small-caps;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 25px;
+    }
+
+a {
+    color: rgb(140, 12, 76);
+    }
+
+a:hover {
+    color: rgb(198, 255, 105);
+    }
+
+
+#loops {
+    
+    display: inline-block;
+    vertical-align:middle;
+    width:auto;
+    max-width:140px;
+    height:auto;
+    max-height:200px;
+    border: 1px rgba(0, 0, 0, 0) solid;
+}
+#pitchBox {
+    display: inline-block;
+    vertical-align:middle;
+    width:auto;
+    max-width:140px;
+    height:auto;
+    max-height:200px;
+    border: 1px rgba(0, 0, 0, 0) solid; 
+
+}
+
+
+
+
+.vertical-heighest-first
+{
+    cursor: pointer;
+    width: 150px !important;
+    -webkit-appearance: none;
+    z-index: 200;
+    width:50px;
+    height:20px;
+    border-radius: 10px;
+    background-color: rgb(68, 7, 38) ;
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#4DDBFF), to(#00CCFF));
+    background-image: -webkit-linear-gradient(right,rgb(68, 7, 38), #ffffff);
+    background-image: -moz-linear-gradient(right,rgb(68, 7, 38), #ffffff);
+    background-image: -ms-linear-gradient(right,rgb(68, 7, 38), #ffffff);
+    background-image: -o-linear-gradient(right,rgb(68, 7, 38), #ffffff);
+
+}
+
+
+.vertical-heighest-first
+{
+    -webkit-transform:rotate(270deg);
+    -moz-transform:rotate(270deg);
+    -o-transform:rotate(270deg);
+    -ms-transform:rotate(270deg);
+    transform:rotate(270deg);
+    -webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    border-radius: 50px;
+    
+}
+
+.vertical-heighest-first::-webkit-slider-thumb
+{
+    -webkit-appearance: none;
+    width: 40px;
+    height: 40px;
+    background-color: #555;
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#4DDBFF), to(#00CCFF));
+    background-image: -webkit-linear-gradient(right, #c8ff00,rgb(68, 7, 38));
+    background-image: -moz-linear-gradient(right, #c8ff00,rgb(68, 7, 38));
+    background-image: -ms-linear-gradient(right, #c8ff00,rgb(68, 7, 38));
+    background-image: -o-linear-gradient(right, #c8ff00,rgb(68, 7, 38));
+    -webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    border-radius: 50px;
+}
+
+
+
+.collapsible {
+  
+    background-color:#616161;
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    padding: 5px;
+    width: 50px;
+    border: 2 px;
+    text-align: center;
+    outline: none;
+    font-size: 30px;
+
+  }
+  
+.active {
+background-color: #555;
+
+}
+
+
+.collapsible:hover {
+background-color: #00000058;
+
+}
+
+.content {
+  
+padding: 18px;
+display: none;
+float: inline-end;
+overflow: hidden;
+color:rgb(255, 255, 255);
+font-size: 17px;
+font-variant: normal;
+text-align: center;
+
+margin: 0 auto;
+width: auto;
+max-width:500px;
+height: auto;
+background: rgb(0, 0, 0);
+padding: 20px;
+border: 10px rgba(0, 0, 0, 0) solid;
+
+background-size: cover;
+}
+
+.dots {
+    font-size: 13px;
+    text-align: left;
+    vertical-align: middle;    
+}
+
+#helpButton {
+  
+    position: absolute;
+    left: 0;
+    height: auto;
+    border-radius: 50%;
+}
+
+#github-img {
+    position: absolute;
+    top: 25px;
+    left: 10px;
+    height: auto;
+}
+
+
+#effectButton1 {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    top: 15px;
+    right: 70px;
+    height: auto;
+    display: flex;
+    font-size:8px;
+    padding: 10px 20px;
+}
+
+
+#effectButton2 {
+    position: absolute;
+    top: 60px;
+    right: 70px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    height: auto;
+    font-size:8px;
+    padding: 10px 20px;
+}
+
+#effectButton3 {
+    position: absolute;
+    top: 105px;
+    right: 70px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    height: auto;
+    font-size:8px;
+    padding: 10px 20px;
+}
+
+
+#effectButton4 {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    top: 22px;
+    right: 55px;
+    height: auto;
+    display: flex;
+    font-size:8px;
+    padding: 10px 20px;
+}
+
+
+#effectButton5 {
+    position: absolute;
+    top: 67px;
+    right: 55px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    height: auto;
+    font-size:8px;
+    padding: 10px 20px;
+}
+
+#effectButton6 {
+    position: absolute;
+    top: 112px;
+    right: 55px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    height: auto;
+    font-size:8px;
+    padding: 10px 20px;
+}
+
+
+
+#numbers  {
+
+    font-size: 10px;
+
+    }
+    
+
+.topnav {
+
+overflow: hidden;
+background-color: #333;
+height: 40px;
+}
+
+.topnav a {
+float: center;
+color: #f2f2f2;
+text-align: center;
+padding: 10px 3px;
+text-decoration: none;
+font-size: 15px;
+}
+
+.topnav a:hover {
+background-color: #ddd;
+color: black;
+}
+
+.topnav a.active {
+background-color: rgb(197, 95, 184);
+color: white;
+}
+
+
+  
+  .buttonT:hover span {
+    display:none
+  }
+  
+  .buttonT:hover:before {
+    content:"Ping Pong Delay";
+  }
+  
+  .buttonT:hover {
+    background-color: green;
+  }
+
+
+
+  #container {
+
+    top: 0px;
+    margin: 0 auto;
+    width: 700px;
+    max-width:100%;
+    height: 100%;
+    background: rgba(0, 184, 0, 0.726);
+
+/*     background-image: url("assets/bg7.jpg"); */
+    }
+
+#container2 {
+    margin: 0 auto;
+    width: auto;
+    max-width:500px;
+    height: auto;
+    background: rgb(197, 95, 184);
+    padding: 20px;
+    border: 20px rgba(255, 0, 68, 0.42) solid;
+    /* background-image: url("assets/bg9.jpg"); */
+    color: rgb(68, 7, 38) solid;;
+    background-size: cover;
+    }
+
+    #container3 {
+        font-family: 'Raleway', sans-serif;
+        margin: auto;
+        width: 100%;
+        max-width:500px;
+        height: 100%;
+        background: rgba(0, 0, 0, 0);
+        padding: 0px;
+        border: 0px rgb(0, 0, 0) solid;
+    /*     background-image: url("assets/bg8.jpg"); */
+        color: rgb(68, 7, 38) solid;
+        background-size: cover;
+    
+        }
+
+#container4 {
+    margin: 0 auto;
+    width: auto;
+    max-width:500px;
+    height: auto;
+    background: rgb(0, 0, 0);
+    padding: 0px;
+    border: 0px rgb(84, 117, 6) solid;
+    /* background-image: url("assets/bg8.jpg"); */
+    color: rgb(68, 7, 38) solid;
+    background-size: cover;
+    }
+
+#container5 {
+    margin: 0 auto;
+    width: auto;
+    max-width:500px;
+    height: auto;
+    background: rgb(197, 95, 184);
+    padding: 20px;
+    border: 20px rgb(84, 117, 6) solid;
+/*     background-image: url("assets/bg9.jpg"); */
+    color: rgb(68, 7, 38) solid;;
+    background-size: cover;
+    }
+
+
+
+#container7 {
+
+    font-size: 0px;
+    color: #ffffff00;
+    }
+
+
+/*   #myContainer {
+
+    width:130px; 
+    height:105px;
+    top: 25px;
+    left: 25px;
+    background: rgba(255, 255, 255, 0.486); 
+    position:absolute; 
+
+    border:4px solid black; 
+    border-radius: 10px; 
+    box-shadow: 0 5px 50px #3337
+  } */
+
+  #myContainer {
+    top: 40px;
+    width: 700px; 
+    height: 1200px;
+    max-width: 100%;
+    max-height: 93%;
+
+
+    background: rgba(255, 255, 255, 0.486); 
+    position:absolute; 
+
+
+    border-radius: 10px; 
+
+  }
+
+  #microContainer {
+    display: inline-block;
+    position: relative; 
+
+    width: auto; 
+    height: auto;
+
+  }
+  #myAnimation {
+    width: 30px;
+    height: 30px;
+
+
+    position: absolute;
+    border-radius: 50px;
+    background-color: rgb(50, 34, 197);
+    opacity: 100; /* make this 0 if it is mapped to movement */
+
+  }
+
+  #myAnimation3 {
+    width: 10px;
+    height: 10px;
+
+    position: absolute;
+    border-radius: 50px;
+    background-color: rgb(197, 95, 184);
+    opacity: 100; /* make this 0 if it is mapped to movement */
+
+  }
+  .img {
+    position:absolute; 
+    top: 0px;
+    left: 0px;
+
+}
+#microContainer2 {
+    display: inline-block;
+    position: relative; 
+
+    width: 300px; 
+    height: 200px;
+    z-index: 1;
+  }
+
+  #myContainer2 {
+
+    width:135px; 
+    height:70px;
+    top: 30px;
+    left: 30px;
+    background: rgba(231, 247, 0, 0.486); 
+    position:absolute; 
+
+    border:4px solid black; 
+    border-radius: 10px; 
+    box-shadow: 0 5px 50px #3337
+  }
+
+
+.img2 {
+    position:absolute; 
+    top: 0px;
+    left: 0px;
+    z-index: -1;
+
+}
+
+#microContainer3 {
+    display: inline-block;
+    position: relative; 
+
+    width: 300px; 
+    height: 200px;
+    z-index: 1;
+  }
+
+  #myContainer3 {
+
+    width:130px; 
+    height:80px;
+    top: 45px;
+    left: 25px;
+    background: rgba(255, 255, 255, 0.486); 
+    position:absolute; 
+
+    border:4px solid black; 
+    border-radius: 10px; 
+    box-shadow: 0 5px 50px #3337
+  }
+
+
+.img3 {
+    position:absolute; 
+    top: 0px;
+    left: 0px;
+    z-index: -1;
+
+}
+
+/* Animation for gradually disappearing box with instructions. Thanks to https://stackoverflow.com/questions/39513705/make-html-element-disappear-with-css-animation */
+
+@keyframes myAnimation2{
+
+
+  0%   {opacity: 0; top: 5%;}
+  10%   {opacity: 0.8;  transform: rotateX(0deg);  top: 5%;}
+  50%   {opacity: 0.8;  transform: rotateX(0deg);  top: 5%;}
+  60% {opacity: 0.8; transform: rotateX(90deg); top: 50%;}
+
+  100% {opacity: 0; transform: rotateX(90deg); top: 90%;}
+
+}
+  #myelement{
+    position: absolute;
+    pointer-events: none;
+    top: 5%;
+    left: 0px;
+    height: 100%;
+    width: auto;
+    background-color: #000000;
+    text-align: center;
+    color:rgb(255, 255, 255);
+    font-size: 20px;
+    
+    animation-name: myAnimation2;
+    animation-duration: 30000ms;
+    animation-fill-mode: forwards;
+  
+  }
+
+  #looper1 {
+    top: 20px;
+    width: 100%;
+    height: 100%;
+    font-size: 90%;
+    box-sizing: border-box;
+    background-color: rgba(0, 233, 8, 0);
+    
+}
+  .rectangle {
+    position: absolute;
+    bottom: 0px;
+    left: 0;
+    height: 25%;
+    width: 40%;
+    background-color: #ff00ea46;
+    font-size: 100%;
+    text-align: center;
+    color:rgba(0, 0, 0, 0.767);
+    border:4px solid black; 
+    border-radius: 10px; 
+  }
+
+  .rectangle2 {
+    position: absolute;
+    bottom: 0px;
+    right: 0;
+    height: 25%;
+    width: 40%;
+    background-color: #ff00ea46;
+    font-size: 100%;
+    text-align: center;
+    color:rgba(0, 0, 0, 0.767);
+    border:4px solid black; 
+    border-radius: 10px; 
+  }
+
+  .rectangle3 {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    height: 15%;
+    width: 20%;
+    background-color: #d9ff00cb;
+    font-size: 100%;
+    text-align: center;
+    color:rgba(0, 0, 0, 0.767);
+    border:4px solid black; 
+    border-radius: 10px; 
+  }
+
+  .rectangle4 {
+    position: absolute;
+    top: 20%;
+    right: 0px;
+    height: 15%;
+    width: 20%;
+    background-color: #d9ff00cb;
+    font-size: 100%;
+    text-align: center;
+    color:rgba(0, 0, 0, 0.767);
+    border:4px solid black; 
+    border-radius: 10px; 
+  }
+
+  .rectangle5 {
+    position: absolute;
+    top: 40%;
+    right: 0px;
+    height: 15%;
+    width: 20%;
+    background-color: #d9ff00cb;
+    font-size: 100%;
+    text-align: center;
+    color:rgba(0, 0, 0, 0.767);
+    border:4px solid black; 
+    border-radius: 10px; 
+  }
+  .rectangle6 {
+    position: absolute;
+    top: 0%;
+    right: 0px;
+    height: 20%;
+    width: 20%;
+    background-color: #d9ff00d3;
+    font-size: 100%;
+    text-align: center;
+    color:rgba(0, 0, 0, 0.767);
+    border:4px solid black; 
+    border-radius: 10px; 
+  }
+  .rectangle7 {
+    position: absolute;
+    top: 33%;
+    right: 0px;
+    height: 20%;
+    width: 20%;
+    background-color: #d9ff00d3;
+    font-size: 100%;
+    text-align: center;
+    color:rgba(0, 0, 0, 0.767);
+    border:4px solid black; 
+    border-radius: 10px; 
+  }
+  .rectangle8 {
+    position: absolute;
+    top: 66%;
+    right: 0px;
+    height: 20%;
+    width: 20%;
+    background-color: #d9ff00c5;
+    font-size: 100%;
+    text-align: center;
+    color:rgba(0, 0, 0, 0.767);
+    border:4px solid black; 
+    border-radius: 10px; 
+  }
+
+  .monitoring {
+    position: absolute;
+    z-index: -1;
+    top: 60%;
+    width: 50%;
+    height: 50px;
+    padding: 0;
+    margin: auto;
+    display: block;
+    text-align: left;
+    font-size: 70%;
+    color:#f3f704c4;
+  
+  }
+  
