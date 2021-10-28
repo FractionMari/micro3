@@ -192,16 +192,19 @@ function updateFieldIfNotNull(fieldName, value, precision=2){
     let xDotValues;
     let yDotValues;
     let zValue;
+    let pitchWheel = event.accelerationIncludingGravity.y;
     if (/windows phone/i.test(userAgent)) {
       xDotValues = ((event.accelerationIncludingGravity.x + 10) * 5);
       yDotValues = (((event.accelerationIncludingGravity.y * -1)  + 10) * 5);
       zValue = event.acceleration.z - 0.3;
+      pitchWheel = pitchWheel + 10;
   }
 
   if (/android/i.test(userAgent)) {
     xDotValues = ((event.accelerationIncludingGravity.x + 10) * 5);
     yDotValues = (((event.accelerationIncludingGravity.y * -1)  + 10) * 5);
     zValue = event.acceleration.z - 0.3;
+    pitchWheel = pitchWheel + 10;
   }
 
   // iOS detection from: http://stackoverflow.com/a/9039885/177710
@@ -209,6 +212,7 @@ function updateFieldIfNotNull(fieldName, value, precision=2){
     xDotValues = (((event.accelerationIncludingGravity.x * -1) + 10) * 5);
     yDotValues = ((event.accelerationIncludingGravity.y  + 10) * 5);
     zValue = event.acceleration.z;
+    pitchWheel = (pitchWheel * -1) + 10;
   }
 
 
@@ -219,7 +223,7 @@ function updateFieldIfNotNull(fieldName, value, precision=2){
     let totAcc = (Math.abs(xValue) + Math.abs(yValue) + Math.abs(zValue));
     let elem = document.getElementById("myAnimation"); 
     let filterWheel = event.accelerationIncludingGravity.x;
-    let pitchWheel = event.accelerationIncludingGravity.y;
+    
     
     // Updating values to HTML
     updateFieldIfNotNull('test_x', xValue);
@@ -287,7 +291,7 @@ function updateFieldIfNotNull(fieldName, value, precision=2){
     // Will give a range from 0-20
     //pitchWheel = pitchWheel + 10;
 
-    pitchWheel = (pitchWheel * -1) + 10;
+    
 
     updateFieldIfNotNull('pitchwheel', pitchWheel);
     pitchShift(pitchWheel, synth, scaleSelect);
