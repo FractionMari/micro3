@@ -183,7 +183,7 @@ function updateFieldIfNotNull(fieldName, value, precision=2){
     // variables for rotation, GUI monitoring and volume control
     let xValue = event.acceleration.x; 
     let yValue = event.acceleration.y; 
-    let zValue = event.acceleration.z;
+    let zValue = event.acceleration.z + 0.3;
     let totAcc = (Math.abs(xValue) + Math.abs(yValue) + Math.abs(zValue));
     let elem = document.getElementById("myAnimation"); 
     let filterWheel = event.accelerationIncludingGravity.x;
