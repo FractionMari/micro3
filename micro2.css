@@ -560,7 +560,7 @@ color: white;
     font-size: 20px;
     
     animation-name: myAnimation2;
-    animation-duration: 30000ms;
+    animation-duration: 3ms;
     animation-fill-mode: forwards;
   
   }
