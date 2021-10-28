@@ -27,6 +27,7 @@ const gainNode = new Tone.Gain().toDestination();
 const pingPong = new Tone.PingPongDelay().connect(gainNode);
 const phaser = new Tone.Phaser().connect(gainNode);
 const autoWah = new Tone.AutoWah(50, 6, -30).connect(gainNode);
+var userAgent = navigator.userAgent || navigator.vendor || window.opera;
 
 let buttonOn = 3;
 let buttonOn2 = false;
@@ -247,15 +248,32 @@ function updateFieldIfNotNull(fieldName, value, precision=2){
     //elem.style.opacity = newAcc; //Uncomment to map the opacity of red dot to motion
        
     ////////////////////////////////////////////
-    ///////// Red Dot Monitoring in GUI ///////
+    ///////// Blue Dot Monitoring in GUI ///////
     ///////////////////////////////////////////
 
-    // multiplying with 5 to get values from 0-100
-    let xDotValues = (((event.accelerationIncludingGravity.x * -1) + 10) * 5);
-    // multiplying with 5 to get values from 0-100
-    let yDotValues = (((event.accelerationIncludingGravity.y * -1)  + 10) * 5);
+    //// Both x and Y axis: multiplying with 5 to get values from 0-100 ////
+    let xDotValues;
+    let yDotValues;
+    if (/windows phone/i.test(userAgent)) {
+      xDotValues = ((event.accelerationIncludingGravity.x + 10) * 5);
+      yDotValues = (((event.accelerationIncludingGravity.y * -1)  + 10) * 5);
 
-    //let yDotValues = ((event.accelerationIncludingGravity.y  + 10) * 5);
+  }
+
+  if (/android/i.test(userAgent)) {
+    xDotValues = ((event.accelerationIncludingGravity.x + 10) * 5);
+    yDotValues = (((event.accelerationIncludingGravity.y * -1)  + 10) * 5);
+  }
+
+  // iOS detection from: http://stackoverflow.com/a/9039885/177710
+  if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+    xDotValues = (((event.accelerationIncludingGravity.x * -1) + 10) * 5);
+    yDotValues = ((event.accelerationIncludingGravity.y  + 10) * 5);
+  }
+
+
+
+
     elem.style.top = yDotValues + '%'; 
     elem.style.left = xDotValues + '%'; 
 
