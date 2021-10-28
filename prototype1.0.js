@@ -18,6 +18,8 @@ function getMobileOperatingSystem() {
   return "unknown";
 }
 
+document.getElementById("OS").innerHTML = getMobileOperatingSystem();
+
 
 
 // Tone.js parameters:
