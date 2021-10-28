@@ -282,9 +282,9 @@ function updateFieldIfNotNull(fieldName, value, precision=2){
 
     // Pitch and scale functions
     // Will give a range from 0-20
-    pitchWheel = pitchWheel + 10;
+    //pitchWheel = pitchWheel + 10;
 
-    // pitchWheel = (pitchWheel * -1) + 10;
+    pitchWheel = (pitchWheel * -1) + 10;
 
     updateFieldIfNotNull('pitchwheel', pitchWheel);
     pitchShift(pitchWheel, synth, scaleSelect);
