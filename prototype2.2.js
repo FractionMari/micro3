@@ -650,7 +650,7 @@ function updateFieldIfNotNull(fieldName, value, precision=2){
       let pingPongXaxis = xDotValues / 200;
       //pingPong.delayTime.rampTo(pingPongXaxis,pingPongYaxis);
       //pingPong.delayTime.value = pingPongXaxis + "n";
-    //  pingPong.feedback.value = pingPongYaxis;
+      pingPong.feedback.value = pingPongYaxis;
    //   pingPong.wet.value = pingPongXaxis;
      //   pitchShift.pitch = Math.floor(((yDotValues * -1) + 75) / 10);
         
@@ -753,7 +753,7 @@ function updateFieldIfNotNull(fieldName, value, precision=2){
         let gainValue = (((event.accelerationIncludingGravity.y * -1)  + 10) / 50);
         synth4pitch = Math.abs((yDotValues * -1) * 2);
 
-        pitchChangePitch = Math.floor(((yDotValues * -1) / 10) + 5) * 2;
+        pitchChangePitch = Math.floor(((yDotValues * -1) / 10) + 5);
         updateFieldIfNotNull('pitchChange', pitchChangePitch);
 
        // gainNode.gain.rampTo(gainValue, 0.3);
