@@ -602,9 +602,9 @@ function updateFieldIfNotNull(fieldName, value, precision=2){
     // BPM manipulation with total acc:
 
     if (totAcc > 20)
-    Tone.Transport.bpm.rampTo(Tone.Transport.bpm.value * totAcc);
-    if (totAcc < 1)
-    Tone.Transport.bpm.rampTo(90),
+    Tone.Transport.bpm.value = (Tone.Transport.bpm.value * totAcc);
+    else if (totAcc < 1)
+    Tone.Transport.bpm.value = 90,
     document.getElementById("tempo").innerHTML =
     "BPM: " + "<br>" + Tone.Transport.bpm.value;
     ///////////////////////////////////////////////
