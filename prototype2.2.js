@@ -598,9 +598,19 @@ function updateFieldIfNotNull(fieldName, value, precision=2){
     let elem = document.getElementById("myAnimation"); 
  
     updateFieldIfNotNull('total_acc', totAcc);
+
+    // BPM manipulation with total acc:
+
+    if (totAcc > 20)
+    Tone.Transport.bpm.rampTo(Tone.Transport.bpm.value * totAcc);
+    if (totAcc < 1)
+    Tone.Transport.bpm.rampTo(90),
+    document.getElementById("tempo").innerHTML =
+    "BPM: " + "<br>" + Tone.Transport.bpm.value;
     ///////////////////////////////////////////////
     /////////////// VOLUME VARIABLES //////////////
     ///////////////////////////////////////////////
+  
 
     // Scaling values for inverted volume-control
     var fn = generateScaleFunction(0.3, 3, 0.9, 0.1);
