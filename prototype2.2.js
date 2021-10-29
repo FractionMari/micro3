@@ -829,7 +829,7 @@ function updateFieldIfNotNull(fieldName, value, precision=2){
               pitchChange.pitch = 0;
             }
 
-
+    createRandomness();
     pitchChange.pitch = pitchChangePitch,
      setTimeout(myFunction, 2000);
        
