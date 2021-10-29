@@ -830,6 +830,56 @@ function updateFieldIfNotNull(fieldName, value, precision=2){
             }
 
     createRandomness();
+    document.getElementById("timeSign").innerHTML =
+    "Time signature: " + "<br>" + random0 + " / 16";
+  
+    document.getElementById("tempo").innerHTML =
+    "BPM: " + "<br>" + Tone.Transport.bpm.value;
+
+
+
+    const seq0 = new Tone.Sequence((time, note) => {
+      synth0.triggerAttackRelease(note, 2, time);
+      // subdivisions are given as subarrays
+  }, randomArray).start(0);
+  seq0.playbackRate = 0.5;
+  
+  const seq = new Tone.Sequence((time, note) => {
+      synth.triggerAttackRelease(note, 2, time);
+      // subdivisions are given as subarrays
+  }, randomArray).start(0);
+  seq.playbackRate = 0.5;
+  
+  const seq2 = new Tone.Sequence((time, note) => {
+     synth2.triggerAttackRelease(note, 0.8, time);
+     // subdivisions are given as subarrays
+  }, randomArray2).start(0);
+  
+  const seq3 = new Tone.Sequence((time, note) => {
+     synth3.triggerAttackRelease(note, 0.8, time);
+     // subdivisions are given as subarrays
+  }, randomArray3).start(0);
+  
+  const seq4 = new Tone.Sequence((time, note) => {
+  synth4.triggerAttackRelease(note, 0.3, time);
+  // subdivisions are given as subarrays
+  }, randomMelodyArray).start(0);
+  seq4.playbackRate = 0.5;
+  
+  const pattern6 = new Tone.Sequence(function(time, note){
+  synth6.triggerAttackRelease(note, 0.9);
+  }, randomHiHatArray).start();
+  pattern6.playbackRate = 0.5;
+  
+  const pattern5 = new Tone.Sequence(function(time, note){
+  synth5.triggerAttackRelease(note, 0.9);
+  }, randomDrumArray).start();
+  pattern5.playbackRate = 0.5;
+
+
+    Tone.Transport.start();
+    Tone.start();
+
     pitchChange.pitch = pitchChangePitch,
      setTimeout(myFunction, 2000);
        
