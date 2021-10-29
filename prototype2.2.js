@@ -562,11 +562,38 @@ function updateFieldIfNotNull(fieldName, value, precision=2){
 
   function handleMotion(event) {
 
-    
-// variables for rotation, GUI monitoring and volume control
+       // iOs devices flip the gyroscope axis, so thanks to this thread to be able to adapt
+   // to diffrent OSes:
+    // https://stackoverflow.com/questions/21741841/detecting-ios-android-operating-system
+    //// Both x and Y axis: multiplying with 5 to get values from 0-100 ////
+    let xDotValues;
+    let yDotValues;
+    let zValue;
     let xValue = event.acceleration.x; 
     let yValue = event.acceleration.y; 
-    let zValue = event.acceleration.z;
+    
+    if (/windows phone/i.test(userAgent)) {
+      xDotValues = ((event.accelerationIncludingGravity.x + 10) * 5);
+      yDotValues = (((event.accelerationIncludingGravity.y * -1)  + 10) * 5);
+      zValue = event.acceleration.z - 0.3;
+
+  }
+
+  if (/android/i.test(userAgent)) {
+    xDotValues = ((event.accelerationIncludingGravity.x + 10) * 5);
+    yDotValues = (((event.accelerationIncludingGravity.y * -1)  + 10) * 5);
+    zValue = event.acceleration.z - 0.3;
+  }
+
+  // iOS detection from: http://stackoverflow.com/a/9039885/177710
+  if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+    xDotValues = (((event.accelerationIncludingGravity.x * -1) + 10) * 5);
+    yDotValues = ((event.accelerationIncludingGravity.y  + 10) * 5);
+    zValue = event.acceleration.z;
+  }
+// variables for rotation, GUI monitoring and volume control
+
+    
     let totAcc = (Math.abs(xValue) + Math.abs(yValue) + Math.abs(zValue));
     let elem = document.getElementById("myAnimation"); 
  
@@ -597,28 +624,7 @@ function updateFieldIfNotNull(fieldName, value, precision=2){
     ///////////////////////////////////////////
    
 
-   // iOs devices flip the gyroscope axis, so thanks to this thread to be able to adapt
-   // to diffrent OSes:
-    // https://stackoverflow.com/questions/21741841/detecting-ios-android-operating-system
-    //// Both x and Y axis: multiplying with 5 to get values from 0-100 ////
-    let xDotValues;
-    let yDotValues;
-    if (/windows phone/i.test(userAgent)) {
-      xDotValues = ((event.accelerationIncludingGravity.x + 10) * 5);
-      yDotValues = (((event.accelerationIncludingGravity.y * -1)  + 10) * 5);
 
-  }
-
-  if (/android/i.test(userAgent)) {
-    xDotValues = ((event.accelerationIncludingGravity.x + 10) * 5);
-    yDotValues = (((event.accelerationIncludingGravity.y * -1)  + 10) * 5);
-  }
-
-  // iOS detection from: http://stackoverflow.com/a/9039885/177710
-  if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-    xDotValues = (((event.accelerationIncludingGravity.x * -1) + 10) * 5);
-    yDotValues = ((event.accelerationIncludingGravity.y  + 10) * 5);
-  }
 
     elem.style.top = yDotValues + '%'; 
     elem.style.left = xDotValues + '%'; 
