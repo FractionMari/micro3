@@ -445,7 +445,7 @@ color: white;
   #myAnimation {
     width: 30px;
     height: 30px;
-
+    font-size: 10px;
 
     position: absolute;
     border-radius: 50px;

@@ -601,12 +601,12 @@ function updateFieldIfNotNull(fieldName, value, precision=2){
 
     // BPM manipulation with total acc:
 
-    if (totAcc > 20)
-    Tone.Transport.bpm.value = (Tone.Transport.bpm.value * totAcc);
+/*     if (totAcc > 20)
+    Tone.Transport.bpm.value = (Tone.Transport.bpm.value + totAcc);
     else if (totAcc < 1)
     Tone.Transport.bpm.value = 90,
     document.getElementById("tempo").innerHTML =
-    "BPM: " + "<br>" + Tone.Transport.bpm.value;
+    "BPM: " + "<br>" + Tone.Transport.bpm.value; */
     ///////////////////////////////////////////////
     /////////////// VOLUME VARIABLES //////////////
     ///////////////////////////////////////////////
@@ -771,7 +771,7 @@ function updateFieldIfNotNull(fieldName, value, precision=2){
 
         pitchChangePitch = Math.floor(((yDotValues * -1) / 10) + 5);
         updateFieldIfNotNull('pitchChange', pitchChangePitch);
-
+        
        // gainNode.gain.rampTo(gainValue, 0.3);
         
 
@@ -847,6 +847,7 @@ function updateFieldIfNotNull(fieldName, value, precision=2){
 
 
     pitchChange.pitch = pitchChangePitch;
+    document.getElementById("transpose").innerHTML = "Transpose:" + pitchChange.pitch;
     //  setTimeout(myFunction, 2000);
        
 
