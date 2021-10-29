@@ -571,7 +571,7 @@ function updateFieldIfNotNull(fieldName, value, precision=2){
     let zValue;
     let xValue = event.acceleration.x; 
     let yValue = event.acceleration.y; 
-    
+
     if (/windows phone/i.test(userAgent)) {
       xDotValues = ((event.accelerationIncludingGravity.x + 10) * 5);
       yDotValues = (((event.accelerationIncludingGravity.y * -1)  + 10) * 5);
@@ -653,10 +653,10 @@ function updateFieldIfNotNull(fieldName, value, precision=2){
       //  phaser.octaves = (yDotValues / 20);
       //  phaser.wet.value = yDotValues / 100;
       let pingPongYaxis = (yDotValues / 100);
-      let pingPongXaxis = xDotValues / 200;
+      let pingPongXaxis = xDotValues / 100;
       //pingPong.delayTime.rampTo(pingPongXaxis,pingPongYaxis);
       //pingPong.delayTime.value = pingPongXaxis + "n";
-      pingPong.feedback.value = pingPongYaxis;
+      pingPong.feedback.value = xDotValues / 100;
    //   pingPong.wet.value = pingPongXaxis;
      //   pitchShift.pitch = Math.floor(((yDotValues * -1) + 75) / 10);
         
