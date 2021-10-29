@@ -597,7 +597,7 @@ function updateFieldIfNotNull(fieldName, value, precision=2){
     let totAcc = (Math.abs(xValue) + Math.abs(yValue) + Math.abs(zValue));
     let elem = document.getElementById("myAnimation"); 
  
-
+    updateFieldIfNotNull('total_acc', totAcc);
     ///////////////////////////////////////////////
     /////////////// VOLUME VARIABLES //////////////
     ///////////////////////////////////////////////
