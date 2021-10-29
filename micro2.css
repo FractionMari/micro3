@@ -716,7 +716,7 @@ color: white;
   .monitoring {
     position: absolute;
     z-index: -1;
-    top: 60%;
+    top: 55%;
     width: 50%;
     height: 50px;
     padding: 0;
