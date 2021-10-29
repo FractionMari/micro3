@@ -38,7 +38,7 @@ pingPong.wet.value = 0.2;
 //reverb.dampening = 1000;
 
 //reverb.wet.value = 0.2;
-const autoWah = new Tone.AutoWah(100, 5, -10).connect(reverb);
+const autoWah = new Tone.AutoWah(100, 5, -10).connect(pingPong);
 autoWah.Q.value = 9;
 autoWah.wet.value = 0.2;
 let buttonOn = false;
