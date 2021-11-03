@@ -28,6 +28,9 @@
 // 8. october Finishing the second iteration. applying some viusal feedback.
 var userAgent = navigator.userAgent || navigator.vendor || window.opera;
 
+// lock phone in portrait mode
+screen.orientation.lock("portrait")
+
 // Tone.js parameters:
 const gainNode = new Tone.Gain().toDestination();
 
