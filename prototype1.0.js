@@ -1,6 +1,5 @@
 var userAgent = navigator.userAgent || navigator.vendor || window.opera;
-screen.lockOrientationUniversal = screen.lockOrientation || screen.mozLockOrientation || screen.msLockOrientation;
-screen.lockOrientation("portrait");
+screen.orientation.lock("portrait")
 
 // Tone.js parameters:
 const gainNode = new Tone.Gain().toDestination();
