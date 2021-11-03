@@ -1,4 +1,6 @@
 var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+// lock phone in portrait mode
 screen.orientation.lock("portrait")
 
 // Tone.js parameters:
