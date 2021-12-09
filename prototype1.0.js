@@ -1,5 +1,11 @@
-var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+// This is the third iteration of the Micro prototypes that were developed for the Micro project at RITMO and later used
+// in Mari Lesteberg's master thesis, autumn 2021. 
+// The prototype was developed by Mari Lesteberg 
+// from Janury - June 2021, supported by RITMO / University of Oslo
+// From June-December 2021 further developed as as part of a Master's thesis.
 
+// userAgent for detection of operating system
+var userAgent = navigator.userAgent || navigator.vendor || window.opera;
 
 
 // Tone.js parameters:
@@ -9,14 +15,7 @@ const phaser = new Tone.Phaser().connect(gainNode);
 const autoWah = new Tone.AutoWah(50, 6, -30).connect(gainNode);
 
 
-let buttonOn = 3;
-let buttonOn2 = false;
-let buttonOn3 = false;
-let buttonOn4 = false;
-let buttonOn5 = false;
-
-
-
+// Synths
 const synth = new Tone.DuoSynth({
   volume: -19,
   voice0: {
@@ -74,9 +73,8 @@ const synth3 = new Tone.Synth({
   }
 }).connect(gainNode);
 
-
-//const synth = new Tone.FMSynth().connect(gainNode);
-//const synth2 = new Tone.DuoSynth().connect(gainNode);
+// Scales
+var scaleSelect = ["G1", "A1","C2", "D2", "F2", "G2", "A2","C3", "D3", "F3", "G3", "A3","C4", "D4", "F4", "G4", "A4", "C5", "D5", "F5", "G5", "A5", "C6"];
 
 // Other Variables
 let newAcc;
@@ -84,6 +82,12 @@ let newAcc2;
 let inverse = false;
 let is_running = false;
 let demo_button = document.getElementById("start_demo");
+// variables for button on and off
+let buttonOn = 3;
+let buttonOn2 = false;
+let buttonOn3 = false;
+let buttonOn4 = false;
+let buttonOn5 = false;
 
 
 // With this function the values won't go below a threshold  (borrowed from this StackOverflow conversation: https://stackoverflow.com/questions/5842747/how-can-i-use-javascript-to-limit-a-number-between-a-min-max-value/54464006)
@@ -100,13 +104,10 @@ var offset = newMin - prevMin,
       };
 };
 
-// Scales
-var scaleSelect = ["G1", "A1","C2", "D2", "F2", "G2", "A2","C3", "D3", "F3", "G3", "A3","C4", "D4", "F4", "G4", "A4", "C5", "D5", "F5", "G5", "A5", "C6"];
 
 // Function for shifting pitch
 function pitchShift (pitch, instrument, scale) {
-  // const intervalChange = 1;
-//   const points = Math.floor(pitch / intervalChange);
+
 const points = pitch;
 
   if (points >= 20)
@@ -182,7 +183,7 @@ function updateFieldIfNotNull(fieldName, value, precision=2){
 // Function for handling motion
   function handleMotion(event) {
 
-        ////////////////////////////////////////////
+    ////////////////////////////////////////////
     ///////// Blue Dot Monitoring in GUI ///////
     ///////////////////////////////////////////
    
@@ -191,6 +192,7 @@ function updateFieldIfNotNull(fieldName, value, precision=2){
    // to diffrent OSes:
     // https://stackoverflow.com/questions/21741841/detecting-ios-android-operating-system
     //// Both x and Y axis: multiplying with 5 to get values from 0-100 ////
+
     let xDotValues;
     let yDotValues;
     let zValue;
@@ -275,53 +277,41 @@ function updateFieldIfNotNull(fieldName, value, precision=2){
     ///////////////////////////////////////////////
     /////// Variables for effects and pitch ///////
     ///////////////////////////////////////////////
-    // FX2: Filter
-
+  
     // filter x axis a number between 0 and 8
     let filterXaxis = yDotValues / 8;
-/*     var filterScale = generateScaleFunction(-10, 10, 0, 100);
-    filterWheel = Math.abs(filterWheel);
-    filterWheel = filterScale(filterWheel); */
+
     // Gives a value between 0 and 6.5
     filterWheel = (filterWheel + 10) / 3;
-    updateFieldIfNotNull('filterwheel', filterWheel);
-    //autoWah.baseFrequency = filterWheel;
+
+    
+    // Autowah effects
     autoWah.octaves = filterWheel;
     autoWah.Q.value = filterXaxis;
 
-    // Pitch and scale functions
-    // Will give a range from 0-20
-    //pitchWheel = pitchWheel + 10;
-
-    
-
-    updateFieldIfNotNull('pitchwheel', pitchWheel);
-    pitchShift(pitchWheel, synth, scaleSelect);
-    pitchShift(pitchWheel, synth2, scaleSelect);
-    pitchShift(pitchWheel, synth3, scaleSelect);
-
-    // Effects
-    
-    
-    //let harmonicity = pitchWheel / 10;
-    //updateFieldIfNotNull('harmonicity', harmonicity);
-    //synth2.harmonicity.value = harmonicity;
+    // Phaser effects
     phaser.baseFrequency.value = 100;
     phaser.frequency.value = xDotValues;
     phaser.octaves = (yDotValues / 10);
 
-    
-
-
-    // FX1: pingPong delay
-    // for y axis effect, get a value between 0-1
+    // PingPong effects
     let pingPongYaxis = (yDotValues / 80);
     let pingPongXaxis = xDotValues / 100;
-    //pingPong.delayTime.rampTo(pingPongXaxis,pingPongYaxis);
-    //pingPong.delayTime.value = pingPongXaxis + "n";
+
     pingPong.feedback.value = pingPongYaxis;
     pingPong.wet.value = pingPongXaxis;
-    //tremolo.frequency = yDotValues;
+
+
+    // Selection of pitch based on selected scale and instrument:
+    pitchShift(pitchWheel, synth, scaleSelect);
+    pitchShift(pitchWheel, synth2, scaleSelect);
+    pitchShift(pitchWheel, synth3, scaleSelect);
+
+    // update values to HTML  
+    updateFieldIfNotNull('filterwheel', filterWheel);
+    updateFieldIfNotNull('pitchwheel', pitchWheel);
+
+    // function for timeout of the air motion "buttons"
     function myTimeout1() {
       buttonOn = 1;
     }
@@ -334,6 +324,41 @@ function updateFieldIfNotNull(fieldName, value, precision=2){
       buttonOn = 3;
     }
 
+    function myTimeout4() {
+      buttonOn2 = false;
+    }
+
+    function myTimeout5() {
+      buttonOn2 = true;
+    }
+
+    function myTimeout6() {
+      buttonOn3 = false;
+    }
+
+    function myTimeout7() {
+      buttonOn3 = true;
+    }
+
+    function myTimeout8() {
+      buttonOn4 = false;
+    }
+
+    function myTimeout9() {
+      buttonOn4 = true;
+    }
+
+    function myTimeout10() {
+      buttonOn5 = false;
+    }
+
+    function myTimeout11() {
+      buttonOn5 = true;
+    }
+
+
+
+    // function for changing scales with air motion "buttons"
     if ((buttonOn == 3) && (yDotValues > 73) && (xDotValues < 33))
     document.getElementById("rectangle").innerHTML = "Scale: diatonic",
  
@@ -361,15 +386,6 @@ function updateFieldIfNotNull(fieldName, value, precision=2){
     setTimeout(myTimeout3, 2000);
 
 
-    function myTimeout4() {
-      buttonOn2 = false;
-    }
-
-    function myTimeout5() {
-      buttonOn2 = true;
-    }
-
-
 
     // On and off inverse mode
     if ((buttonOn2 == true) && (yDotValues > 73) && (xDotValues > 58))
@@ -387,31 +403,11 @@ function updateFieldIfNotNull(fieldName, value, precision=2){
     rectangle2.style.background = "#1100ff52",
     setTimeout(myTimeout5, 2000);
 
-    // Effects on and off
 
-    function myTimeout6() {
-      buttonOn3 = false;
-    }
+    ////////////////////////////////////
+    //////// Effects on and off ////////
+    ///////////////////////////////////
 
-    function myTimeout7() {
-      buttonOn3 = true;
-    }
-
-    function myTimeout8() {
-      buttonOn4 = false;
-    }
-
-    function myTimeout9() {
-      buttonOn4 = true;
-    }
-
-    function myTimeout10() {
-      buttonOn5 = false;
-    }
-
-    function myTimeout11() {
-      buttonOn5 = true;
-    }
 
 // ping pong effect
     if ((buttonOn3 == true) && (yDotValues < 20) && (xDotValues > 70))
@@ -478,7 +474,7 @@ function updateFieldIfNotNull(fieldName, value, precision=2){
 
 
 
-
+// button that fills whole screen
   document.getElementById("looper1").addEventListener("click", function(){
 
     // Request permission for iOS 13+ devices
@@ -532,8 +528,6 @@ function updateFieldIfNotNull(fieldName, value, precision=2){
 
       this.className = "is-playing2";
       this.innerHTML = "Synth 1: ON";
-      //const synth = new Tone.AMSynth().connect(gainNode);
-
 
       synth2.triggerRelease();
       synth.triggerAttack("C4"); 
