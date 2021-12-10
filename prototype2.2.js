@@ -1,47 +1,52 @@
+/* 
+
+MIT License
+
+Copyright (c) 2021 Mari Lesteberg
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.*/
+
+
+// This is the third iteration of the Micro prototypes that were developed for
+// the Micro project at RITMO Centre for Interdisciplinary Studies in Rhythm, 
+// Time and Motion at the University of Oslo and later used as a part of a 
+// Master thesis. 
 // This prototype is an app for android and iOs phones, which uses
-// accelerometer and gyroscoe data to control a loop. 
+// accelerometer and gyroscope data to control a parts of a random loop. 
 // The prototype was developed by Mari Lesteberg 
 // from Janury - June 2021, supported by RITMO / University of Oslo
+// From June-December 2021 further developed as as part of a Master's thesis.
 
-
-// Functioning prototype 1: Tone.js 15. February
-// The oscillator version with new code + adding the Tone.js library.
-
-
-// 11. februar: including the Tone.js to improve sound quality
-//1. og 2. mars: creating a loop function
-//16. april: making it work for iOS
-
-// 4. may
-// visuals update and update with the new and better QOM
-
-// 26. mai
-
-// 9. august:
-// working on a new version that is stripped down regarding buttons and attributes. 
-// Will try to enable sound to appear instantly, to enable motion sensor when page is 
-// loaded
-
-// 18. august
-// tidying up, and trying to create a more musical loop rather than random?
-
-// 8. october Finishing the second iteration. applying some viusal feedback.
+// userAgent for detection of operating system
 var userAgent = navigator.userAgent || navigator.vendor || window.opera;
 
 
 // Tone.js parameters:
 const gainNode = new Tone.Gain().toDestination();
-
 const pitchChange = new Tone.PitchShift().connect(gainNode);
 const pingPong = new Tone.PingPongDelay().connect(pitchChange);
 pingPong.wet.value = 0.2;
-//const autoWah = new Tone.Reverb().connect(pingPong);
-//reverb.dampening = 1000;
-
-//reverb.wet.value = 0.2;
 const autoWah = new Tone.AutoWah(100, 5, -10).connect(pingPong);
 autoWah.Q.value = 9;
 autoWah.wet.value = 0.2;
+
+// variables for button on and off
 let buttonOn = false;
 let buttonOn2 = false;
 let buttonOn3 = false;
@@ -110,7 +115,7 @@ let synth4pitch;
           octaves: 4
         } */
       });
-  //  const synth3 = new Tone.PluckSynth();
+
     const synth3 = new Tone.Synth({
         volume: -9,
         oscillator: {
@@ -212,14 +217,13 @@ let synth4pitch;
 // Other Variables
 let newAcc;
 let newAcc2;
-// let inverse = true;
-let is_running = false;
-let demo_button = document.getElementById("start_demo");
-
-
-
 gainNode.gain.value = 0.5;
-  // Random tone generator 
+
+
+  ////////////////////////////
+  // Random tone generator  //
+  ////////////////////////////
+
   const freq = note => 2 ** (note / 12) * 440; // 440 is the frequency of A4
   // the bitwise Or does the same as Math.floor
   //const notes = [-12, -10,  -8, -7,  -5, -3 , -1,0, 2, 4, 5, 7, 9, 11, 12]; // Close to your 100, 400, 1600 and 6300

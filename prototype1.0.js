@@ -1,8 +1,40 @@
-// This is the third iteration of the Micro prototypes that were developed for the Micro project at RITMO and later used
-// in Mari Lesteberg's master thesis, autumn 2021. 
+/* 
+
+MIT License
+
+Copyright (c) 2021 Mari Lesteberg
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.*/
+
+
+// This is the third iteration of the Micro prototypes that were developed for
+// the Micro project at RITMO Centre for Interdisciplinary Studies in Rhythm, 
+// Time and Motion at the University of Oslo and later used as a part of a 
+// Master thesis.
+
+// This prototype is an app for android and iOs phones, which uses
+// accelerometer and gyroscope data to play notes and activate effects.
 // The prototype was developed by Mari Lesteberg 
+
 // from Janury - June 2021, supported by RITMO / University of Oslo
-// From June-December 2021 further developed as as part of a Master's thesis.
+// From June - December 2021 further developed as as part of a Master's thesis.
+
 
 // userAgent for detection of operating system
 var userAgent = navigator.userAgent || navigator.vendor || window.opera;
@@ -16,12 +48,13 @@ const autoWah = new Tone.AutoWah(50, 6, -30).connect(gainNode);
 
 
 // Synths
+
+// synth 1
 const synth = new Tone.DuoSynth({
   volume: -19,
   voice0: {
       oscillator: {
           type: "fmsawtooth",
-
         },
       envelope: {
           attack: 0.9,
@@ -32,21 +65,17 @@ const synth = new Tone.DuoSynth({
       filter: {
           Q: 17,
           frequency: 850,
-
       },
   },
 
   voice1: {
       oscillator: {
           type: "pulse",
-
         },
-
   },
-
-
 }).connect(gainNode);
 
+// synth 2
 const synth2 = new Tone.Synth({
   volume: -9,
   oscillator: {
@@ -60,6 +89,7 @@ const synth2 = new Tone.Synth({
   }
 }).connect(gainNode);
 
+// synth 3
 const synth3 = new Tone.Synth({
   volume: -9,
   oscillator: {
@@ -82,6 +112,7 @@ let newAcc2;
 let inverse = false;
 let is_running = false;
 let demo_button = document.getElementById("start_demo");
+
 // variables for button on and off
 let buttonOn = 3;
 let buttonOn2 = false;
@@ -226,7 +257,7 @@ function updateFieldIfNotNull(fieldName, value, precision=2){
     
     let totAcc = (Math.abs(xValue) + Math.abs(yValue) + Math.abs(zValue));
     let elem = document.getElementById("myAnimation"); 
-    let filterWheel = event.accelerationIncludingGravity.x;
+
     
     
     // Updating values to HTML
@@ -253,24 +284,26 @@ function updateFieldIfNotNull(fieldName, value, precision=2){
     newAcc2 = fn2(totAcc);
     newAcc2 = (clamp(0, 0.7, newAcc2));
 
-    updateFieldIfNotNull('volume_acc', newAcc);
-    updateFieldIfNotNull('volume_acc2', newAcc2);
+
+
     // Switch between inverted and non-inverted volume-control, 
     // and visual feedback indicated by the opacity of the element in GUI
     if (inverse == false)
     gainNode.gain.rampTo(newAcc2, 0.3);
-    //elem.style.opacity = newAcc2; //Uncomment to map the opacity of red dot to motion
+    //elem.style.opacity = newAcc2; //Uncomment to map the opacity of blue dot to motion
     else
     // more smooth change of volume:
     gainNode.gain.rampTo(newAcc, 0.3);
-    //elem.style.opacity = newAcc; //Uncomment to map the opacity of red dot to motion
+    //elem.style.opacity = newAcc; //Uncomment to map the opacity of blue dot to motion
        
 
     elem.style.top = yDotValues + '%'; 
     elem.style.left = xDotValues + '%'; 
 
 
-
+    // Updating values to HTML
+    updateFieldIfNotNull('volume_acc', newAcc);
+    updateFieldIfNotNull('volume_acc2', newAcc2);
     updateFieldIfNotNull('x_dots', xDotValues);
     updateFieldIfNotNull('y_dots', yDotValues);
 
@@ -279,11 +312,10 @@ function updateFieldIfNotNull(fieldName, value, precision=2){
     ///////////////////////////////////////////////
   
     // filter x axis a number between 0 and 8
+    let filterWheel = event.accelerationIncludingGravity.x;
     let filterXaxis = yDotValues / 8;
-
     // Gives a value between 0 and 6.5
     filterWheel = (filterWheel + 10) / 3;
-
     
     // Autowah effects
     autoWah.octaves = filterWheel;
@@ -540,8 +572,3 @@ function updateFieldIfNotNull(fieldName, value, precision=2){
     );
 
 
-
-
-let fx1on = false;
-let fx2on = false;
-let fx3on = false;
