@@ -454,9 +454,7 @@ Tone.Transport.bpm.value = 40;
      let random6 = freq(randomNote6());
      randomArray6.push(random6);
 
-     
-   
-
+     // getting random numbers
      let random4 = getRandomInt(10);
      let random5 = getRandomInt(14);
 
@@ -530,26 +528,25 @@ function updateFieldIfNotNull(fieldName, value, precision=2){
   }
 
 
+// Function for handling motion
   function handleMotion(event) {
 
        // iOs devices flip the gyroscope axis, so thanks to this thread to be able to adapt
    // to diffrent OSes:
     // https://stackoverflow.com/questions/21741841/detecting-ios-android-operating-system
-    //// Both x and Y axis: multiplying with 5 to get values from 0-100 ////
-    let xDotValues;
-    let yDotValues;
-    let zValue;
-    let xValue = event.acceleration.x; 
-    let yValue = event.acceleration.y; 
+   
 
-    if (/windows phone/i.test(userAgent)) {
-      xDotValues = ((event.accelerationIncludingGravity.x + 10) * 5);
-      yDotValues = (((event.accelerationIncludingGravity.y * -1)  + 10) * 5);
-      zValue = event.acceleration.z - 0.3;
+
+  if (/windows phone/i.test(userAgent)) {
+     //// Both x and Y axis: multiplying with 5 to get values from 0-100 ////
+    xDotValues = ((event.accelerationIncludingGravity.x + 10) * 5);
+    yDotValues = (((event.accelerationIncludingGravity.y * -1)  + 10) * 5);
+    zValue = event.acceleration.z - 0.3;
 
   }
 
   if (/android/i.test(userAgent)) {
+     //// Both x and Y axis: multiplying with 5 to get values from 0-100 ////
     xDotValues = ((event.accelerationIncludingGravity.x + 10) * 5);
     yDotValues = (((event.accelerationIncludingGravity.y * -1)  + 10) * 5);
     zValue = event.acceleration.z - 0.3;
@@ -557,19 +554,27 @@ function updateFieldIfNotNull(fieldName, value, precision=2){
 
   // iOS detection from: http://stackoverflow.com/a/9039885/177710
   if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+     //// Both x and Y axis: multiplying with 5 to get values from 0-100 ////
     xDotValues = (((event.accelerationIncludingGravity.x * -1) + 10) * 5);
     yDotValues = ((event.accelerationIncludingGravity.y  + 10) * 5);
     zValue = event.acceleration.z;
   }
+
 // variables for rotation, GUI monitoring and volume control
-
+let xDotValues;
+let yDotValues;
+let zValue;
+let xValue = event.acceleration.x; 
+let yValue = event.acceleration.y; 
     
-    let totAcc = (Math.abs(xValue) + Math.abs(yValue) + Math.abs(zValue));
-    let elem = document.getElementById("myAnimation"); 
- 
-    updateFieldIfNotNull('total_acc', totAcc);
+// this variable calculate the total quantity of motion:
+let totAcc = (Math.abs(xValue) + Math.abs(yValue) + Math.abs(zValue));
+let elem = document.getElementById("myAnimation"); 
 
-    // BPM manipulation with total acc:
+// Updating values to the HTML:
+updateFieldIfNotNull('total_acc', totAcc);
+
+    // BPM manipulation with total acc (deactivated for now, but saving it for later):
 
 /*     if (totAcc > 20)
     Tone.Transport.bpm.value = (Tone.Transport.bpm.value + totAcc);
@@ -577,6 +582,8 @@ function updateFieldIfNotNull(fieldName, value, precision=2){
     Tone.Transport.bpm.value = 90,
     document.getElementById("tempo").innerHTML =
     "BPM: " + "<br>" + Tone.Transport.bpm.value; */
+
+
     ///////////////////////////////////////////////
     /////////////// VOLUME VARIABLES //////////////
     ///////////////////////////////////////////////
@@ -586,59 +593,46 @@ function updateFieldIfNotNull(fieldName, value, precision=2){
     var fn = generateScaleFunction(0.3, 3, 0.9, 0.1);
     newAcc = fn(totAcc);
     newAcc = (clamp(0, 0.9, newAcc));
-    let tempo = Math.floor(newAcc * 150);
+    //let tempo = Math.floor(newAcc * 150); (deactivated for now, but saving it for later)
 
     // Scaling values for non-inverted volume-control
     var fn2 = generateScaleFunction(0.3, 3, 0, 0.9);
     newAcc2 = fn2(totAcc);
     newAcc2 = (clamp(0, 0.9, newAcc2));
-    let tempo2 = Math.floor(newAcc2 * 100);
+    //let tempo2 = Math.floor(newAcc2 * 100); (deactivated for now, but saving it for later)
 
     // Switch between inverted and non-inverted volume-control, 
     // and visual feedback indicated by the opacity of the element in GUI
 
-    //gainNode.gain.rampTo(newAcc2, 0.1);
-    //Tone.Transport.bpm.rampTo(tempo, 0.5);
+    //gainNode.gain.rampTo(newAcc2, 0.1); (deactivated for now, but saving it for later)
+    //Tone.Transport.bpm.rampTo(tempo, 0.5); (deactivated for now, but saving it for later)
+
+
     ////////////////////////////////////////////
     ///////// Blue Dot Monitoring in GUI ///////
     ///////////////////////////////////////////
    
-
-
-
     elem.style.top = yDotValues + '%'; 
     elem.style.left = xDotValues + '%'; 
 
+    // Updating values to the HTML:
     updateFieldIfNotNull('x_dots', xDotValues);
     updateFieldIfNotNull('y_dots', yDotValues);
       
 
 
 
-    autoWah.baseFrequency = yDotValues;
-    pingPong.delayTime = xDotValues / 100;
-   // autoWah.octaves = (xDotValues / 20) + 5;
-
-
     ///////////////////////////////////////////////
     /////// Variables for effects and pitch ///////
     ///////////////////////////////////////////////
-    // Filter
-    var filterScale = generateScaleFunction(-10, 10, 10, 300);
-   
-        // Effects
-        
 
-      //  phaser.frequency.value = xDotValues / 2;
-      //  phaser.octaves = (yDotValues / 20);
-      //  phaser.wet.value = yDotValues / 100;
-      let pingPongYaxis = (yDotValues / 100);
-      let pingPongXaxis = xDotValues / 100;
-      //pingPong.delayTime.rampTo(pingPongXaxis,pingPongYaxis);
-      //pingPong.delayTime.value = pingPongXaxis + "n";
-      pingPong.feedback.value = xDotValues / 100;
-   //   pingPong.wet.value = pingPongXaxis;
-     //   pitchShift.pitch = Math.floor(((yDotValues * -1) + 75) / 10);
+        // Effects used in this version: Values on the Y axis for autoWah base Frequency and values 
+    // on the X axis for pingPong delayTime values.
+    autoWah.baseFrequency = yDotValues;
+    pingPong.delayTime = xDotValues / 100;
+
+    pingPong.feedback.value = xDotValues / 100;
+
         
         function myTimeout1() {
           buttonOn = true;
