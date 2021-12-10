@@ -595,264 +595,271 @@ function updateFieldIfNotNull(fieldName, value, precision=2){
     // this variable calculate the total quantity of motion:
     let totAcc = (Math.abs(xValue) + Math.abs(yValue) + Math.abs(zValue));
     let elem = document.getElementById("myAnimation"); 
- 
+    
+    // Updating values to the HTML:
     updateFieldIfNotNull('total_acc', totAcc);
-
-    // BPM manipulation with total acc:
-
-/*     if (totAcc > 20)
-    Tone.Transport.bpm.value = (Tone.Transport.bpm.value + totAcc);
-    else if (totAcc < 1)
-    Tone.Transport.bpm.value = 90,
-    document.getElementById("tempo").innerHTML =
-    "BPM: " + "<br>" + Tone.Transport.bpm.value; */
-    ///////////////////////////////////////////////
-    /////////////// VOLUME VARIABLES //////////////
-    ///////////////////////////////////////////////
-  
-
-    // Scaling values for inverted volume-control
-    var fn = generateScaleFunction(0.3, 3, 0.9, 0.1);
-    newAcc = fn(totAcc);
-    newAcc = (clamp(0, 0.9, newAcc));
-    let tempo = Math.floor(newAcc * 150);
-
-    // Scaling values for non-inverted volume-control
-    var fn2 = generateScaleFunction(0.3, 3, 0, 0.9);
-    newAcc2 = fn2(totAcc);
-    newAcc2 = (clamp(0, 0.9, newAcc2));
-    let tempo2 = Math.floor(newAcc2 * 100);
-
-    // Switch between inverted and non-inverted volume-control, 
-    // and visual feedback indicated by the opacity of the element in GUI
-
-    //gainNode.gain.rampTo(newAcc2, 0.1);
-    //Tone.Transport.bpm.rampTo(tempo, 0.5);
-    ////////////////////////////////////////////
-    ///////// Blue Dot Monitoring in GUI ///////
-    ///////////////////////////////////////////
-   
-
-
-
-    elem.style.top = yDotValues + '%'; 
-    elem.style.left = xDotValues + '%'; 
-
-    updateFieldIfNotNull('x_dots', xDotValues);
-    updateFieldIfNotNull('y_dots', yDotValues);
+    
+        // BPM manipulation with total acc (deactivated for now, but saving it for later):
+    
+    /*     if (totAcc > 20)
+        Tone.Transport.bpm.value = (Tone.Transport.bpm.value + totAcc);
+        else if (totAcc < 1)
+        Tone.Transport.bpm.value = 90,
+        document.getElementById("tempo").innerHTML =
+        "BPM: " + "<br>" + Tone.Transport.bpm.value; */
+    
+    
+        ///////////////////////////////////////////////
+        /////////////// VOLUME VARIABLES //////////////
+        ///////////////////////////////////////////////
       
-
-
-
-    autoWah.baseFrequency = yDotValues;
-    pingPong.delayTime = xDotValues / 100;
-   // autoWah.octaves = (xDotValues / 20) + 5;
-
-
-    ///////////////////////////////////////////////
-    /////// Variables for effects and pitch ///////
-    ///////////////////////////////////////////////
-    // Filter
-    var filterScale = generateScaleFunction(-10, 10, 10, 300);
-   
-        // Effects
-        
-
-      //  phaser.frequency.value = xDotValues / 2;
-      //  phaser.octaves = (yDotValues / 20);
-      //  phaser.wet.value = yDotValues / 100;
-      let pingPongYaxis = (yDotValues / 100);
-      let pingPongXaxis = xDotValues / 100;
-      //pingPong.delayTime.rampTo(pingPongXaxis,pingPongYaxis);
-      //pingPong.delayTime.value = pingPongXaxis + "n";
-      pingPong.feedback.value = xDotValues / 100;
-   //   pingPong.wet.value = pingPongXaxis;
-     //   pitchShift.pitch = Math.floor(((yDotValues * -1) + 75) / 10);
-        
-        function myTimeout1() {
-          buttonOn = true;
-        }
     
-        function myTimeout2() {
-          buttonOn = false;
-        }
-
-        function myTimeout3() {
-          buttonOn2 = true;
-        }
+        // Scaling values for inverted volume-control
+        var fn = generateScaleFunction(0.3, 3, 0.9, 0.1);
+        newAcc = fn(totAcc);
+        newAcc = (clamp(0, 0.9, newAcc));
+        //let tempo = Math.floor(newAcc * 150); (deactivated for now, but saving it for later)
     
-        function myTimeout4() {
-          buttonOn2 = false;
-        }
-
-        function myTimeout5() {
-          buttonOn3 = true;
-        }
+        // Scaling values for non-inverted volume-control
+        var fn2 = generateScaleFunction(0.3, 3, 0, 0.9);
+        newAcc2 = fn2(totAcc);
+        newAcc2 = (clamp(0, 0.9, newAcc2));
+        //let tempo2 = Math.floor(newAcc2 * 100); (deactivated for now, but saving it for later)
     
-        function myTimeout6() {
-          buttonOn3 = false;
-        }
-
+        // Switch between inverted and non-inverted volume-control, 
+        // and visual feedback indicated by the opacity of the element in GUI
     
-
-
-        // On and off Pattern1
-        if ((buttonOn == false) && (yDotValues < 15) && (xDotValues > 75))
-        document.getElementById("rectangle6").innerHTML = "Synth1: on",
-
-        synth.connect(autoWah),
-        synth0.connect(autoWah),
-        rectangle6.style.opacity = 1,
-        rectangle6.style.background = "#1100ff52",
-
-        setTimeout(myTimeout1, 2000);
-        //updateFieldIfNotNull('pitchwheel', pitchShift.pitch);
-
-        else if ((buttonOn == true) && (yDotValues < 15) && (xDotValues > 75))
-        document.getElementById("rectangle6").innerHTML = "Synth1: off",
-
-        synth.disconnect(autoWah),
-        synth0.disconnect(autoWah),
-        rectangle6.style.opacity = 0.2,
-        setTimeout(myTimeout2, 2000);
-
-        // On and off Pattern2
-        if ((buttonOn2 == false) &&(yDotValues < 50) && (yDotValues > 32) && (xDotValues > 75))
-        document.getElementById("rectangle7").innerHTML = "Synth2: on",
-        synth2.connect(autoWah),
-        synth3.connect(autoWah),
-        rectangle7.style.opacity = 1,
-        rectangle7.style.background = "#1100ff52",
-        setTimeout(myTimeout3, 2000);
-
-        else if ((buttonOn2 == true) &&(yDotValues < 50) && (yDotValues > 32) && (xDotValues > 75))
-        document.getElementById("rectangle7").innerHTML = "Synth2: off",
-        synth2.disconnect(autoWah),
-        synth3.disconnect(autoWah),
-        rectangle7.style.opacity = 0.2,
-        setTimeout(myTimeout4, 2000);
-
-
-        // On and off Pattern3
-        if ((buttonOn3 == false) &&(yDotValues < 80) && (yDotValues > 62) && (xDotValues > 75))
-        document.getElementById("rectangle8").innerHTML = "Melody: on",
-        synth4.connect(autoWah),
-        synth5.connect(autoWah),
-        rectangle8.style.opacity = 1,
-        rectangle8.style.background = "#1100ff52",
-        setTimeout(myTimeout5, 2000);
-
-        else if ((buttonOn3 == true) &&(yDotValues < 80) && (yDotValues > 62) && (xDotValues > 75))
-        document.getElementById("rectangle8").innerHTML = "Melody: off",
-        synth4.disconnect(autoWah),
-        synth5.disconnect(autoWah),
-        rectangle8.style.opacity = 0.2,
-        setTimeout(myTimeout6, 2000);
-
-/*         // On and off Pattern2
-        if ((yDotValues < 50) && (yDotValues > 32) && (xDotValues > 75))
-        pattern2.mute = true;
-
-        else if ((yDotValues > 80) && (xDotValues < 80))
-        pattern2.mute = false;
-
+        //gainNode.gain.rampTo(newAcc2, 0.1); (deactivated for now, but saving it for later)
+        //Tone.Transport.bpm.rampTo(tempo, 0.5); (deactivated for now, but saving it for later)
     
-        // On and off Pattern3
-        if ((yDotValues < 80) && (yDotValues > 62) && (xDotValues > 75))
-        pattern3.mute = false;
-
-        else if (yDotValues > 100)
-        pattern3.mute = true; */
-
-
-        let gainValue = (((event.accelerationIncludingGravity.y * -1)  + 10) / 50);
-        synth4pitch = Math.abs((yDotValues * -1) * 2);
-
-        pitchChangePitch = Math.floor(((yDotValues * -1) / 10) + 5);
-        updateFieldIfNotNull('pitchChange', pitchChangePitch);
-        
-       // gainNode.gain.rampTo(gainValue, 0.3);
-        
-
-    }
- 
-
-
-    document.getElementById("looper1").addEventListener("click", function() {
-          if(this.className == ''){
-          
-                   // Request permission for iOS 13+ devices
-                   if (
-                    DeviceMotionEvent &&
-                    typeof DeviceMotionEvent.requestPermission === "function"
-                  ) {
-                    DeviceMotionEvent.requestPermission();
-                  }
-      
-
-
-      this.className = "is-playing";
-      this.innerHTML = "";
-      
-
-
-      const seq0 = new Tone.Sequence((time, note) => {
-        synth0.triggerAttackRelease(note, 2, time);
-        // subdivisions are given as subarrays
-    }, randomArray).start(0);
-    seq0.playbackRate = 0.5;
     
-    const seq = new Tone.Sequence((time, note) => {
-        synth.triggerAttackRelease(note, 2, time);
-        // subdivisions are given as subarrays
-    }, randomArray).start(0);
-    seq.playbackRate = 0.5;
-    
-    const seq2 = new Tone.Sequence((time, note) => {
-       synth2.triggerAttackRelease(note, 0.8, time);
-       // subdivisions are given as subarrays
-    }, randomArray2).start(0);
-    
-    const seq3 = new Tone.Sequence((time, note) => {
-       synth3.triggerAttackRelease(note, 0.8, time);
-       // subdivisions are given as subarrays
-    }, randomArray3).start(0);
-    
-    const seq4 = new Tone.Sequence((time, note) => {
-    synth4.triggerAttackRelease(note, 0.3, time);
-    // subdivisions are given as subarrays
-    }, randomMelodyArray).start(0);
-    seq4.playbackRate = 0.5;
-    
-    const pattern6 = new Tone.Sequence(function(time, note){
-    synth6.triggerAttackRelease(note, 0.9);
-    }, randomHiHatArray).start();
-    pattern6.playbackRate = 0.5;
-    
-    const pattern5 = new Tone.Sequence(function(time, note){
-    synth5.triggerAttackRelease(note, 0.9);
-    }, randomDrumArray).start();
-    pattern5.playbackRate = 0.5;
-
-      window.addEventListener("devicemotion", handleMotion);
-      Tone.Transport.start();
-      Tone.start();
-}
-          else{
-
-/*             function myFunction() {
-              pitchChange.pitch = 0;
-            } */
-
-
-    pitchChange.pitch = pitchChangePitch;
-    document.getElementById("transpose").innerHTML = "Transpose:" + pitchChange.pitch;
-    //  setTimeout(myFunction, 2000);
+        ////////////////////////////////////////////
+        ///////// Blue Dot Monitoring in GUI ///////
+        ///////////////////////////////////////////
        
-
-
+        elem.style.top = yDotValues + '%'; 
+        elem.style.left = xDotValues + '%'; 
     
-  }}
-  );
-
-
+        // Updating values to the HTML:
+        updateFieldIfNotNull('x_dots', xDotValues);
+        updateFieldIfNotNull('y_dots', yDotValues);
+          
+    
+    
+    
+        ///////////////////////////////////////////////
+        /////// Variables for effects and pitch ///////
+        ///////////////////////////////////////////////
+    
+            // Effects used in this version: Values on the Y axis for autoWah base Frequency and values 
+        // on the X axis for pingPong delayTime values.
+        autoWah.baseFrequency = yDotValues;
+        pingPong.delayTime = xDotValues / 100;
+       // autoWah.octaves = (xDotValues / 20) + 5;
+       
+        // Filter
+        var filterScale = generateScaleFunction(-10, 10, 10, 300);
+       
+            // Effects
+            
+    
+          //  phaser.frequency.value = xDotValues / 2;
+          //  phaser.octaves = (yDotValues / 20);
+          //  phaser.wet.value = yDotValues / 100;
+          let pingPongYaxis = (yDotValues / 100);
+          let pingPongXaxis = xDotValues / 100;
+          //pingPong.delayTime.rampTo(pingPongXaxis,pingPongYaxis);
+          //pingPong.delayTime.value = pingPongXaxis + "n";
+          pingPong.feedback.value = xDotValues / 100;
+       //   pingPong.wet.value = pingPongXaxis;
+         //   pitchShift.pitch = Math.floor(((yDotValues * -1) + 75) / 10);
+            
+            function myTimeout1() {
+              buttonOn = true;
+            }
+        
+            function myTimeout2() {
+              buttonOn = false;
+            }
+    
+            function myTimeout3() {
+              buttonOn2 = true;
+            }
+        
+            function myTimeout4() {
+              buttonOn2 = false;
+            }
+    
+            function myTimeout5() {
+              buttonOn3 = true;
+            }
+        
+            function myTimeout6() {
+              buttonOn3 = false;
+            }
+    
+        
+    
+    
+            // On and off Pattern1
+            if ((buttonOn == false) && (yDotValues < 15) && (xDotValues > 75))
+            document.getElementById("rectangle6").innerHTML = "Synth1: on",
+    
+            synth.connect(autoWah),
+            synth0.connect(autoWah),
+            rectangle6.style.opacity = 1,
+            rectangle6.style.background = "#1100ff52",
+    
+            setTimeout(myTimeout1, 2000);
+            //updateFieldIfNotNull('pitchwheel', pitchShift.pitch);
+    
+            else if ((buttonOn == true) && (yDotValues < 15) && (xDotValues > 75))
+            document.getElementById("rectangle6").innerHTML = "Synth1: off",
+    
+            synth.disconnect(autoWah),
+            synth0.disconnect(autoWah),
+            rectangle6.style.opacity = 0.2,
+            setTimeout(myTimeout2, 2000);
+    
+            // On and off Pattern2
+            if ((buttonOn2 == false) &&(yDotValues < 50) && (yDotValues > 32) && (xDotValues > 75))
+            document.getElementById("rectangle7").innerHTML = "Synth2: on",
+            synth2.connect(autoWah),
+            synth3.connect(autoWah),
+            rectangle7.style.opacity = 1,
+            rectangle7.style.background = "#1100ff52",
+            setTimeout(myTimeout3, 2000);
+    
+            else if ((buttonOn2 == true) &&(yDotValues < 50) && (yDotValues > 32) && (xDotValues > 75))
+            document.getElementById("rectangle7").innerHTML = "Synth2: off",
+            synth2.disconnect(autoWah),
+            synth3.disconnect(autoWah),
+            rectangle7.style.opacity = 0.2,
+            setTimeout(myTimeout4, 2000);
+    
+    
+            // On and off Pattern3
+            if ((buttonOn3 == false) &&(yDotValues < 80) && (yDotValues > 62) && (xDotValues > 75))
+            document.getElementById("rectangle8").innerHTML = "Melody: on",
+            synth4.connect(autoWah),
+            synth5.connect(autoWah),
+            rectangle8.style.opacity = 1,
+            rectangle8.style.background = "#1100ff52",
+            setTimeout(myTimeout5, 2000);
+    
+            else if ((buttonOn3 == true) &&(yDotValues < 80) && (yDotValues > 62) && (xDotValues > 75))
+            document.getElementById("rectangle8").innerHTML = "Melody: off",
+            synth4.disconnect(autoWah),
+            synth5.disconnect(autoWah),
+            rectangle8.style.opacity = 0.2,
+            setTimeout(myTimeout6, 2000);
+    
+    /*         // On and off Pattern2
+            if ((yDotValues < 50) && (yDotValues > 32) && (xDotValues > 75))
+            pattern2.mute = true;
+    
+            else if ((yDotValues > 80) && (xDotValues < 80))
+            pattern2.mute = false;
+    
+        
+            // On and off Pattern3
+            if ((yDotValues < 80) && (yDotValues > 62) && (xDotValues > 75))
+            pattern3.mute = false;
+    
+            else if (yDotValues > 100)
+            pattern3.mute = true; */
+    
+    
+            let gainValue = (((event.accelerationIncludingGravity.y * -1)  + 10) / 50);
+            synth4pitch = Math.abs((yDotValues * -1) * 2);
+    
+            pitchChangePitch = Math.floor(((yDotValues * -1) / 10) + 5);
+            updateFieldIfNotNull('pitchChange', pitchChangePitch);
+            
+           // gainNode.gain.rampTo(gainValue, 0.3);
+            
+    
+        }
+     
+    
+    
+        document.getElementById("looper1").addEventListener("click", function() {
+              if(this.className == ''){
+              
+                       // Request permission for iOS 13+ devices
+                       if (
+                        DeviceMotionEvent &&
+                        typeof DeviceMotionEvent.requestPermission === "function"
+                      ) {
+                        DeviceMotionEvent.requestPermission();
+                      }
+          
+    
+    
+          this.className = "is-playing";
+          this.innerHTML = "";
+          
+    
+    
+          const seq0 = new Tone.Sequence((time, note) => {
+            synth0.triggerAttackRelease(note, 2, time);
+            // subdivisions are given as subarrays
+        }, randomArray).start(0);
+        seq0.playbackRate = 0.5;
+        
+        const seq = new Tone.Sequence((time, note) => {
+            synth.triggerAttackRelease(note, 2, time);
+            // subdivisions are given as subarrays
+        }, randomArray).start(0);
+        seq.playbackRate = 0.5;
+        
+        const seq2 = new Tone.Sequence((time, note) => {
+           synth2.triggerAttackRelease(note, 0.8, time);
+           // subdivisions are given as subarrays
+        }, randomArray2).start(0);
+        
+        const seq3 = new Tone.Sequence((time, note) => {
+           synth3.triggerAttackRelease(note, 0.8, time);
+           // subdivisions are given as subarrays
+        }, randomArray3).start(0);
+        
+        const seq4 = new Tone.Sequence((time, note) => {
+        synth4.triggerAttackRelease(note, 0.3, time);
+        // subdivisions are given as subarrays
+        }, randomMelodyArray).start(0);
+        seq4.playbackRate = 0.5;
+        
+        const pattern6 = new Tone.Sequence(function(time, note){
+        synth6.triggerAttackRelease(note, 0.9);
+        }, randomHiHatArray).start();
+        pattern6.playbackRate = 0.5;
+        
+        const pattern5 = new Tone.Sequence(function(time, note){
+        synth5.triggerAttackRelease(note, 0.9);
+        }, randomDrumArray).start();
+        pattern5.playbackRate = 0.5;
+    
+          window.addEventListener("devicemotion", handleMotion);
+          Tone.Transport.start();
+          Tone.start();
+    }
+              else{
+    
+    /*             function myFunction() {
+                  pitchChange.pitch = 0;
+                } */
+    
+    
+        pitchChange.pitch = pitchChangePitch;
+        document.getElementById("transpose").innerHTML = "Transpose:" + pitchChange.pitch;
+        //  setTimeout(myFunction, 2000);
+           
+    
+    
+        
+      }}
+      );
+    
+    
+    
+    
