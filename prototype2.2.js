@@ -220,8 +220,6 @@ let newAcc2;
 gainNode.gain.value = 0.5;
 
 
-
-
   ////////////////////////////
   // Random tone generator  //
   ////////////////////////////
@@ -462,6 +460,7 @@ scaleNotes3 = pentaNotes6,
 document.getElementById("scale").innerHTML =
 "Scale: pentatone2";
 
+// Random creation of melody lines
   function createRandomness() {
    
     for (var i = 0; i < random0; i += 1) {
@@ -487,8 +486,7 @@ document.getElementById("scale").innerHTML =
      randomArray6.push(random6);
 
      
-   
-
+     // getting random numbers
      let random4 = getRandomInt(10);
      let random5 = getRandomInt(14);
      let randomMelody = getRandomInt(14);
@@ -530,15 +528,9 @@ document.getElementById("scale").innerHTML =
       else
       randomDrumArray.push("C1")
 
-
-
   };
-
-
                   
   }
-
-
 
 
 // With this function the values won't go below a threshold 
@@ -561,13 +553,15 @@ function updateFieldIfNotNull(fieldName, value, precision=2){
       document.getElementById(fieldName).innerHTML = value.toFixed(precision);
   }
 
-
+// Function for handling motion
   function handleMotion(event) {
 
-       // iOs devices flip the gyroscope axis, so thanks to this thread to be able to adapt
-   // to diffrent OSes:
-    // https://stackoverflow.com/questions/21741841/detecting-ios-android-operating-system
-    //// Both x and Y axis: multiplying with 5 to get values from 0-100 ////
+  // iOs devices flip the gyroscope axis, so thanks to this thread to be able to adapt
+  // to diffrent OSes:
+  // https://stackoverflow.com/questions/21741841/detecting-ios-android-operating-system
+
+  // variables for rotation, GUI monitoring and volume control
+  
     let xDotValues;
     let yDotValues;
     let zValue;
@@ -575,6 +569,7 @@ function updateFieldIfNotNull(fieldName, value, precision=2){
     let yValue = event.acceleration.y; 
 
     if (/windows phone/i.test(userAgent)) {
+      //// Both x and Y axis: multiplying with 5 to get values from 0-100 ////
       xDotValues = ((event.accelerationIncludingGravity.x + 10) * 5);
       yDotValues = (((event.accelerationIncludingGravity.y * -1)  + 10) * 5);
       zValue = event.acceleration.z - 0.3;
@@ -582,6 +577,7 @@ function updateFieldIfNotNull(fieldName, value, precision=2){
   }
 
   if (/android/i.test(userAgent)) {
+    //// Both x and Y axis: multiplying with 5 to get values from 0-100 ////
     xDotValues = ((event.accelerationIncludingGravity.x + 10) * 5);
     yDotValues = (((event.accelerationIncludingGravity.y * -1)  + 10) * 5);
     zValue = event.acceleration.z - 0.3;
@@ -589,13 +585,14 @@ function updateFieldIfNotNull(fieldName, value, precision=2){
 
   // iOS detection from: http://stackoverflow.com/a/9039885/177710
   if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+    //// Both x and Y axis: multiplying with 5 to get values from 0-100 ////
     xDotValues = (((event.accelerationIncludingGravity.x * -1) + 10) * 5);
     yDotValues = ((event.accelerationIncludingGravity.y  + 10) * 5);
     zValue = event.acceleration.z;
   }
-// variables for rotation, GUI monitoring and volume control
 
-    
+
+    // this variable calculate the total quantity of motion:
     let totAcc = (Math.abs(xValue) + Math.abs(yValue) + Math.abs(zValue));
     let elem = document.getElementById("myAnimation"); 
  
