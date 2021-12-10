@@ -489,7 +489,6 @@ document.getElementById("scale").innerHTML =
      // getting random numbers
      let random4 = getRandomInt(10);
      let random5 = getRandomInt(14);
-     let randomMelody = getRandomInt(14);
 
       if (random4 < 4)
       randomHiHatArray.push(("C1 C1").split(" ")),
