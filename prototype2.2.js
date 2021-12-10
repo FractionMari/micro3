@@ -51,7 +51,7 @@ let buttonOn2 = false;
 let buttonOn3 = false;
 let buttonOn4 = false;
 let buttonOn5 = false;
-let synth4pitch;
+
 
     // bass
     let synth0 = new Tone.AMSynth({
@@ -694,7 +694,7 @@ function updateFieldIfNotNull(fieldName, value, precision=2){
             rectangle6.style.background = "#1100ff52",
     
             setTimeout(myTimeout1, 2000);
-            //updateFieldIfNotNull('pitchwheel', pitchShift.pitch);
+
     
             else if ((buttonOn == true) && (yDotValues < 15) && (xDotValues > 75))
             document.getElementById("rectangle6").innerHTML = "Synth1: off",
@@ -738,16 +738,9 @@ function updateFieldIfNotNull(fieldName, value, precision=2){
             setTimeout(myTimeout6, 2000);
     
 
-    
-    
-            let gainValue = (((event.accelerationIncludingGravity.y * -1)  + 10) / 50);
-            synth4pitch = Math.abs((yDotValues * -1) * 2);
-    
             pitchChangePitch = Math.floor(((yDotValues * -1) / 10) + 5);
             updateFieldIfNotNull('pitchChange', pitchChangePitch);
-            
-           // gainNode.gain.rampTo(gainValue, 0.3);
-            
+
     
         }
      
