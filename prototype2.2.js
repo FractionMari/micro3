@@ -737,7 +737,7 @@ function updateFieldIfNotNull(fieldName, value, precision=2){
             rectangle8.style.opacity = 0.2,
             setTimeout(myTimeout6, 2000);
     
-
+            // Transpose effect: change of pitch of the melody according to the position of the blue dot:
             pitchChangePitch = Math.floor(((yDotValues * -1) / 10) + 5);
             updateFieldIfNotNull('pitchChange', pitchChangePitch);
 
@@ -745,6 +745,7 @@ function updateFieldIfNotNull(fieldName, value, precision=2){
         }
      
     
+    // Button that fills whole screen for requesting Device Motion Event and activation of Tone.js Transport start.
     
         document.getElementById("looper1").addEventListener("click", function() {
               if(this.className == ''){
@@ -766,29 +767,29 @@ function updateFieldIfNotNull(fieldName, value, precision=2){
     
           const seq0 = new Tone.Sequence((time, note) => {
             synth0.triggerAttackRelease(note, 2, time);
-            // subdivisions are given as subarrays
+
         }, randomArray).start(0);
         seq0.playbackRate = 0.5;
         
         const seq = new Tone.Sequence((time, note) => {
             synth.triggerAttackRelease(note, 2, time);
-            // subdivisions are given as subarrays
+
         }, randomArray).start(0);
         seq.playbackRate = 0.5;
         
         const seq2 = new Tone.Sequence((time, note) => {
            synth2.triggerAttackRelease(note, 0.8, time);
-           // subdivisions are given as subarrays
+
         }, randomArray2).start(0);
         
         const seq3 = new Tone.Sequence((time, note) => {
            synth3.triggerAttackRelease(note, 0.8, time);
-           // subdivisions are given as subarrays
+
         }, randomArray3).start(0);
         
         const seq4 = new Tone.Sequence((time, note) => {
         synth4.triggerAttackRelease(note, 0.3, time);
-        // subdivisions are given as subarrays
+
         }, randomMelodyArray).start(0);
         seq4.playbackRate = 0.5;
         
@@ -808,17 +809,13 @@ function updateFieldIfNotNull(fieldName, value, precision=2){
     }
               else{
     
-    /*             function myFunction() {
-                  pitchChange.pitch = 0;
-                } */
-    
+
+// whenever the screen is tapped, the melody is transposed:    
     
         pitchChange.pitch = pitchChangePitch;
+        // monitoring of the transpose value to html:
         document.getElementById("transpose").innerHTML = "Transpose:" + pitchChange.pitch;
-        //  setTimeout(myFunction, 2000);
-           
-    
-    
+
         
       }}
       );
