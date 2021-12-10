@@ -574,7 +574,7 @@ let elem = document.getElementById("myAnimation");
 // Updating values to the HTML:
 updateFieldIfNotNull('total_acc', totAcc);
 
-    // BPM manipulation with total acc (deactivated for now, but saving it for later):
+    // BPM manipulation with total acc:
 
 /*     if (totAcc > 20)
     Tone.Transport.bpm.value = (Tone.Transport.bpm.value + totAcc);
@@ -582,8 +582,6 @@ updateFieldIfNotNull('total_acc', totAcc);
     Tone.Transport.bpm.value = 90,
     document.getElementById("tempo").innerHTML =
     "BPM: " + "<br>" + Tone.Transport.bpm.value; */
-
-
     ///////////////////////////////////////////////
     /////////////// VOLUME VARIABLES //////////////
     ///////////////////////////////////////////////
@@ -593,34 +591,35 @@ updateFieldIfNotNull('total_acc', totAcc);
     var fn = generateScaleFunction(0.3, 3, 0.9, 0.1);
     newAcc = fn(totAcc);
     newAcc = (clamp(0, 0.9, newAcc));
-    //let tempo = Math.floor(newAcc * 150); (deactivated for now, but saving it for later)
+    let tempo = Math.floor(newAcc * 150);
 
     // Scaling values for non-inverted volume-control
     var fn2 = generateScaleFunction(0.3, 3, 0, 0.9);
     newAcc2 = fn2(totAcc);
     newAcc2 = (clamp(0, 0.9, newAcc2));
-    //let tempo2 = Math.floor(newAcc2 * 100); (deactivated for now, but saving it for later)
+    let tempo2 = Math.floor(newAcc2 * 100);
 
     // Switch between inverted and non-inverted volume-control, 
     // and visual feedback indicated by the opacity of the element in GUI
 
-    //gainNode.gain.rampTo(newAcc2, 0.1); (deactivated for now, but saving it for later)
-    //Tone.Transport.bpm.rampTo(tempo, 0.5); (deactivated for now, but saving it for later)
-
-
+    //gainNode.gain.rampTo(newAcc2, 0.1);
+    //Tone.Transport.bpm.rampTo(tempo, 0.5);
     ////////////////////////////////////////////
     ///////// Blue Dot Monitoring in GUI ///////
     ///////////////////////////////////////////
    
+
+
+
     elem.style.top = yDotValues + '%'; 
     elem.style.left = xDotValues + '%'; 
 
-    // Updating values to the HTML:
     updateFieldIfNotNull('x_dots', xDotValues);
     updateFieldIfNotNull('y_dots', yDotValues);
       
-    // Effects used in this version: Values on the Y axis for autoWah base Frequency and values 
-    // on the X axis for pingPong delayTime values.
+
+
+
     autoWah.baseFrequency = yDotValues;
     pingPong.delayTime = xDotValues / 100;
    // autoWah.octaves = (xDotValues / 20) + 5;
