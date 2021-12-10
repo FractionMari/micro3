@@ -651,29 +651,13 @@ function updateFieldIfNotNull(fieldName, value, precision=2){
         /////// Variables for effects and pitch ///////
         ///////////////////////////////////////////////
     
-            // Effects used in this version: Values on the Y axis for autoWah base Frequency and values 
+        // Effects used in this version: Values on the Y axis for autoWah base Frequency and values 
         // on the X axis for pingPong delayTime values.
         autoWah.baseFrequency = yDotValues;
         pingPong.delayTime = xDotValues / 100;
-       // autoWah.octaves = (xDotValues / 20) + 5;
-       
-        // Filter
-        var filterScale = generateScaleFunction(-10, 10, 10, 300);
-       
-            // Effects
-            
-    
-          //  phaser.frequency.value = xDotValues / 2;
-          //  phaser.octaves = (yDotValues / 20);
-          //  phaser.wet.value = yDotValues / 100;
-          let pingPongYaxis = (yDotValues / 100);
-          let pingPongXaxis = xDotValues / 100;
-          //pingPong.delayTime.rampTo(pingPongXaxis,pingPongYaxis);
-          //pingPong.delayTime.value = pingPongXaxis + "n";
-          pingPong.feedback.value = xDotValues / 100;
-       //   pingPong.wet.value = pingPongXaxis;
-         //   pitchShift.pitch = Math.floor(((yDotValues * -1) + 75) / 10);
-            
+        pingPong.feedback.value = xDotValues / 100;
+
+          // function for timeout of the air motion "buttons"
             function myTimeout1() {
               buttonOn = true;
             }
@@ -699,7 +683,6 @@ function updateFieldIfNotNull(fieldName, value, precision=2){
             }
     
         
-    
     
             // On and off Pattern1
             if ((buttonOn == false) && (yDotValues < 15) && (xDotValues > 75))
@@ -754,20 +737,7 @@ function updateFieldIfNotNull(fieldName, value, precision=2){
             rectangle8.style.opacity = 0.2,
             setTimeout(myTimeout6, 2000);
     
-    /*         // On and off Pattern2
-            if ((yDotValues < 50) && (yDotValues > 32) && (xDotValues > 75))
-            pattern2.mute = true;
-    
-            else if ((yDotValues > 80) && (xDotValues < 80))
-            pattern2.mute = false;
-    
-        
-            // On and off Pattern3
-            if ((yDotValues < 80) && (yDotValues > 62) && (xDotValues > 75))
-            pattern3.mute = false;
-    
-            else if (yDotValues > 100)
-            pattern3.mute = true; */
+
     
     
             let gainValue = (((event.accelerationIncludingGravity.y * -1)  + 10) / 50);
