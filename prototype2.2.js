@@ -220,19 +220,29 @@ let newAcc2;
 gainNode.gain.value = 0.5;
 
 
-  // Random tone generator 
-  const freq = note => 2 ** (note / 12) * 440; 
 
+
+  ////////////////////////////
+  // Random tone generator  //
+  ////////////////////////////
+
+  // Inspiration to the Random tone generator is taken from this 
+  // thread: https://codereview.stackexchange.com/questions/203209/random-tone-generator-using-web-audio-api
+ 
+// algorithm for converting an integer to a note frequency (source: https://codereview.stackexchange.com/questions/203209/random-tone-generator-using-web-audio-api):
+const freq = note => 2 ** (note / 12) * 440; 
+
+
+// Diatonic scales:
 const notes3 = [6, 8, 10, 11, 13, 15]; 
 const notes2 = [-4, -2, -1,  1, 3, 5]; 
 const notes = [-18, -16, -14 ,-13, -11, -9, -7, -6];
-
-
 
 const notes3_1 = [5, 7, 9, 10, 12, 14]; 
 const notes2_1 = [-5, -3, -2,  0, 2, 4]; 
 const notes_1 = [-19, -17, -15 ,-14, -12, -10, -8 ,-7]; 
 
+// Pentatonic scales:
 const pentaNotes3 = [3, 6, 8, 11, 13, 15]; 
 const pentaNotes2 = [-8, -6 , -4, -1,  1, 3, 6]; 
 const pentaNotes = [-20, -18, -16, -13 ,-11, -8, -6, -4 ,-1]; 
@@ -241,6 +251,7 @@ const pentaNotes6 = [7, 9, 12, 14, 16, 19];
 const pentaNotes5 = [-0, -2 , 4, 7,  9, 12]; 
 const pentaNotes4 = [-17, -15, -12 ,-10, -8, -5, -3 , 0]; 
 
+// Whole note scales:
 const wholeNotes3 = [10, 12, 14, 16, 18, 20]; 
 const wholeNotes2 = [-2 , 0, 2,  4, 6, 8]; 
 const wholeNotes = [-20 ,-18, -16, -14, -12 ,-10]; 
@@ -256,205 +267,200 @@ const harmNotes = [-12, -11, -8, -6, -4, -3, -2]
 
 
 
-  let randomArray = [];
-  let randomArray2 = [];
-  let randomArray3 = [];
-  let randomArray6 = [];
-  let randomHiHatArray = [];
-  let randomDrumArray = [];
-  let randomMelodyArray = [];
 
-  // creating a random rhythm
-  function getRandomInt(max) {
-    return Math.floor(Math.random() * max);
-  }
+// Empty arrays to be used in the random generator
+let randomArray = [];
+let randomArray2 = [];
+let randomArray3 = [];
+let randomArray6 = [];
+let randomHiHatArray = [];
+let randomDrumArray = [];
+let randomMelodyArray = [];
+let scaleNotes = [];
+let scaleNotes2 = [];
+let scaleNotes3 = [];
 
-  function getRandomInt2(max) {
-    return Math.floor(Math.random() * max);
-  }
+// Fuctions for creating random integers (source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random).
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
+}
 
- 
-
-
-
-  const random0 = getRandomInt(15) + 2;
-  const randomScale = getRandomInt(14);
-  const randomTimbre = getRandomInt2(8);
-  const randomTimbre2 = getRandomInt2(8);
-  const randomTimbre3 = getRandomInt2(8);
-  const randomTempo = getRandomInt(12);
-
-  console.log(randomTimbre);
-  console.log(randomTimbre2);
-  console.log(randomTimbre3);
-  if ((randomTimbre == 0) || ( randomTimbre == 7 ))
-  synth4.oscillator.type = "fmsine";
-  else if ((randomTimbre == 1) || ( randomTimbre == 6 ))
-  synth4.oscillator.type = "pwm";
-  else if ((randomTimbre == 2) || ( randomTimbre == 5 ))
-  synth4.oscillator.type = "pulse";
-  else if ((randomTimbre == 3) || ( randomTimbre == 4 ))
-  synth4 = new Tone.Sampler({
-    urls: {
-      Ab3: "samples/2Ab3.mp3",
-      Ab2: "samples/2Ab2.mp3",
-    },
-  
-  
-  });
-  //console.log(randomTimbre, synth4.oscillator.type);
+function getRandomInt2(max) {
+  return Math.floor(Math.random() * max);
+}
 
 
-// Random musical instrument:
+// Generating random integers
+const random0 = getRandomInt(15) + 2;
+const randomScale = getRandomInt(14);
+const randomTimbre = getRandomInt2(8);
+const randomTimbre2 = getRandomInt2(8);
+const randomTimbre3 = getRandomInt2(8);
+const randomTempo = getRandomInt(12);
+
+// Random selecting between instruments for synth4:
+if ((randomTimbre == 0) || ( randomTimbre == 7 ))
+synth4.oscillator.type = "fmsine";
+else if ((randomTimbre == 1) || ( randomTimbre == 6 ))
+synth4.oscillator.type = "pwm";
+else if ((randomTimbre == 2) || ( randomTimbre == 5 ))
+synth4.oscillator.type = "pulse";
+else if ((randomTimbre == 3) || ( randomTimbre == 4 ))
+synth4 = new Tone.Sampler({
+  urls: {
+    Ab3: "samples/2Ab3.mp3",
+    Ab2: "samples/2Ab2.mp3",
+  },
+
+});
+
+
+// Random selecting between instruments for the synth and synth0:
 
 if ((randomTimbre2 == 0) || ( randomTimbre2 == 7 ))
 synth = new Tone.Sampler({
-	urls: {
-		A1: "A1.mp3",
-		A2: "A2.mp3",
-	},
-	baseUrl: "https://tonejs.github.io/audio/casio/",
+urls: {
+  A1: "A1.mp3",
+  A2: "A2.mp3",
+},
+baseUrl: "https://tonejs.github.io/audio/casio/",
 
 }),
 
 synth0 = new Tone.Sampler({
-	urls: {
-		A1: "A1.mp3",
-		A2: "A2.mp3",
-	},
-	baseUrl: "https://tonejs.github.io/audio/casio/",
+urls: {
+  A1: "A1.mp3",
+  A2: "A2.mp3",
+},
+baseUrl: "https://tonejs.github.io/audio/casio/",
 
 });
 
 else if ((randomTimbre2 == 1) || ( randomTimbre2 == 6 ))
 synth = new Tone.Sampler({
-	urls: {
-		Ab3: "samples/Ab3.mp3",
-		Db3: "samples/Db3.mp3",
-	},
+urls: {
+  Ab3: "samples/Ab3.mp3",
+  Db3: "samples/Db3.mp3",
+},
 
 
 }),
 
 synth0 = new Tone.Sampler({
-	urls: {
-		Ab3: "samples/Ab3.mp3",
-		Db3: "samples/Db3.mp3",
-	},
+urls: {
+  Ab3: "samples/Ab3.mp3",
+  Db3: "samples/Db3.mp3",
+},
 
 
 });
 else if ((randomTimbre2 == 2) || ( randomTimbre2 == 5 ))
 synth = new Tone.Sampler({
-	urls: {
-		Ab3: "samples/2Ab3.mp3",
-		Ab2: "samples/2Ab2.mp3",
-	},
+urls: {
+  Ab3: "samples/2Ab3.mp3",
+  Ab2: "samples/2Ab2.mp3",
+},
 
 
 }),
 
 synth0 = new Tone.Sampler({
-	urls: {
-		Ab3: "samples/2Ab3.mp3",
-		Ab2: "samples/2Ab2.mp3",
-	},
+urls: {
+  Ab3: "samples/2Ab3.mp3",
+  Ab2: "samples/2Ab2.mp3",
+},
 
 
 });
 else if ((randomTimbre2 == 3) || ( randomTimbre2 == 4 ))
 synth = new Tone.Sampler({
-	urls: {
-		G1: "samples/3G1.mp3",
-		G2: "samples/3G2.mp3",
-	},
+urls: {
+  G1: "samples/3G1.mp3",
+  G2: "samples/3G2.mp3",
+},
 
 
 }),
 
 synth0 = new Tone.Sampler({
-	urls: {
-		G1: "samples/3G1.mp3",
-		G2: "samples/3G2.mp3",
-	},
+urls: {
+  G1: "samples/3G1.mp3",
+  G2: "samples/3G2.mp3",
+},
 
 
 });
-//console.log(randomTimbre, synth4.oscillator.type);
+
+// Random decision of tempo (Beats Per Minute / BPM):
 
 if ((randomTempo == 0) || ( randomTempo == 5 ))
 Tone.Transport.bpm.value = 40;
-  else if ((randomTempo == 1) || ( randomTempo == 6 ))
-  Tone.Transport.bpm.value = 60;
-  else if ((randomTempo == 2) || ( randomTempo == 7 ))
-  Tone.Transport.bpm.value = 90;
-  else if ((randomTempo == 3) || ( randomTempo == 8 ))
-  Tone.Transport.bpm.value = 120;
-  else if ((randomTempo == 4) || ( randomTempo == 9 ))
-  Tone.Transport.bpm.value = 50;
-  
+else if ((randomTempo == 1) || ( randomTempo == 6 ))
+Tone.Transport.bpm.value = 60;
+else if ((randomTempo == 2) || ( randomTempo == 7 ))
+Tone.Transport.bpm.value = 90;
+else if ((randomTempo == 3) || ( randomTempo == 8 ))
+Tone.Transport.bpm.value = 120;
+else if ((randomTempo == 4) || ( randomTempo == 9 ))
+Tone.Transport.bpm.value = 50;
 
 
+// HTML monitoring of time signature and BPM:
 
-  document.getElementById("timeSign").innerHTML =
-  "Time signature: " + "<br>" + random0 + " / 16";
+document.getElementById("timeSign").innerHTML =
+"Time signature: " + "<br>" + random0 + " / 16";
 
-  document.getElementById("tempo").innerHTML =
-  "BPM: " + "<br>" + Tone.Transport.bpm.value;
+document.getElementById("tempo").innerHTML =
+"BPM: " + "<br>" + Tone.Transport.bpm.value;
 
-  let scaleNotes = [];
-  let scaleNotes2 = [];
-  let scaleNotes3 = [];
 
-  if ((randomScale == 0) || ( randomScale == 13 ))
-  scaleNotes = pentaNotes,
-  scaleNotes2 = pentaNotes2,
-  scaleNotes3 = pentaNotes3,
-  document.getElementById("scale").innerHTML =
-  "Scale: pentatone";
-  else if ((randomScale == 1) || ( randomScale == 12 ))
-  scaleNotes = wholeNotes,
-  scaleNotes2 = wholeNotes2,
-  scaleNotes3 = wholeNotes3,
-  document.getElementById("scale").innerHTML =
-  "Scale: wholetone";
-  else if ((randomScale == 2) || ( randomScale == 11 ))
-  scaleNotes = notes_1,
-  scaleNotes2 = notes2_1,
-  scaleNotes3 = notes3_1,
-  document.getElementById("scale").innerHTML =
-  "Scale: diatonic2";
-  else if ((randomScale == 3) || ( randomScale == 10 ))
-  scaleNotes = harmNotes,
-  scaleNotes2 = harmNotes2,
-  scaleNotes3 = harmNotes3,
-  document.getElementById("scale").innerHTML =
-  "Scale: double harmonic";
+// Random selection of scales:
 
-  else if ((randomScale == 4) || ( randomScale == 9 ))
-  scaleNotes = notes,
-  scaleNotes2 = notes2,
-  scaleNotes3 = notes3,
-  document.getElementById("scale").innerHTML =
-  "Scale: diatonic";
+if ((randomScale == 0) || ( randomScale == 13 ))
+scaleNotes = pentaNotes,
+scaleNotes2 = pentaNotes2,
+scaleNotes3 = pentaNotes3,
+document.getElementById("scale").innerHTML =
+"Scale: pentatone";
+else if ((randomScale == 1) || ( randomScale == 12 ))
+scaleNotes = wholeNotes,
+scaleNotes2 = wholeNotes2,
+scaleNotes3 = wholeNotes3,
+document.getElementById("scale").innerHTML =
+"Scale: wholetone";
+else if ((randomScale == 2) || ( randomScale == 11 ))
+scaleNotes = notes_1,
+scaleNotes2 = notes2_1,
+scaleNotes3 = notes3_1,
+document.getElementById("scale").innerHTML =
+"Scale: diatonic2";
+else if ((randomScale == 3) || ( randomScale == 10 ))
+scaleNotes = harmNotes,
+scaleNotes2 = harmNotes2,
+scaleNotes3 = harmNotes3,
+document.getElementById("scale").innerHTML =
+"Scale: double harmonic";
 
-  else if ((randomScale == 5) || ( randomScale == 8 ))
-  scaleNotes = wholeNotes4,
-  scaleNotes2 = wholeNotes5,
-  scaleNotes3 = wholeNotes6,
-  document.getElementById("scale").innerHTML =
-  "Scale: wholetone2";
-  //console.log(random0);
-  
+else if ((randomScale == 4) || ( randomScale == 9 ))
+scaleNotes = notes,
+scaleNotes2 = notes2,
+scaleNotes3 = notes3,
+document.getElementById("scale").innerHTML =
+"Scale: diatonic";
 
-  else if ((randomScale == 6) || ( randomScale == 7 ))
-  scaleNotes = pentaNotes4,
-  scaleNotes2 = pentaNotes5,
-  scaleNotes3 = pentaNotes6,
-  document.getElementById("scale").innerHTML =
-  "Scale: pentatone2";
-  //console.log(random0);
-  
+else if ((randomScale == 5) || ( randomScale == 8 ))
+scaleNotes = wholeNotes4,
+scaleNotes2 = wholeNotes5,
+scaleNotes3 = wholeNotes6,
+document.getElementById("scale").innerHTML =
+"Scale: wholetone2";
+
+else if ((randomScale == 6) || ( randomScale == 7 ))
+scaleNotes = pentaNotes4,
+scaleNotes2 = pentaNotes5,
+scaleNotes3 = pentaNotes6,
+document.getElementById("scale").innerHTML =
+"Scale: pentatone2";
 
   function createRandomness() {
    
