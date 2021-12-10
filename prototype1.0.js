@@ -228,11 +228,12 @@ function updateFieldIfNotNull(fieldName, value, precision=2){
     let yDotValues;
     let zValue;
     let pitchWheel = event.accelerationIncludingGravity.y;
-    if (/windows phone/i.test(userAgent)) {
-      xDotValues = ((event.accelerationIncludingGravity.x + 10) * 5);
-      yDotValues = (((event.accelerationIncludingGravity.y * -1)  + 10) * 5);
-      zValue = event.acceleration.z - 0.3;
-      pitchWheel = pitchWheel + 10;
+
+  if (/windows phone/i.test(userAgent)) {
+    xDotValues = ((event.accelerationIncludingGravity.x + 10) * 5);
+    yDotValues = (((event.accelerationIncludingGravity.y * -1)  + 10) * 5);
+    zValue = event.acceleration.z - 0.3;
+    pitchWheel = pitchWheel + 10;
   }
 
   if (/android/i.test(userAgent)) {
@@ -255,6 +256,7 @@ function updateFieldIfNotNull(fieldName, value, precision=2){
     let xValue = event.acceleration.x; 
     let yValue = event.acceleration.y; 
     
+    // this variable calculate the total quantity of motion:
     let totAcc = (Math.abs(xValue) + Math.abs(yValue) + Math.abs(zValue));
     let elem = document.getElementById("myAnimation"); 
 
