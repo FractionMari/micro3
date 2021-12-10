@@ -39,12 +39,17 @@ var userAgent = navigator.userAgent || navigator.vendor || window.opera;
 
 // Tone.js parameters:
 const gainNode = new Tone.Gain().toDestination();
+gainNode.gain.value = 0.5;
 const pitchChange = new Tone.PitchShift().connect(gainNode);
 const pingPong = new Tone.PingPongDelay().connect(pitchChange);
 pingPong.wet.value = 0.2;
 const autoWah = new Tone.AutoWah(100, 5, -10).connect(pingPong);
 autoWah.Q.value = 9;
 autoWah.wet.value = 0.2;
+let synth4pitch;
+let newAcc;
+let newAcc2;
+
 
 // variables for button on and off
 let buttonOn = false;
@@ -53,7 +58,9 @@ let buttonOn3 = false;
 let buttonOn4 = false;
 let buttonOn5 = false;
 
-let synth4pitch;
+/////////////////
+// INSTRUMENTS //
+////////////////
 
     // bass
     let synth0 = new Tone.AMSynth({
@@ -63,7 +70,7 @@ let synth4pitch;
         },
     });
 
-    // harmony
+    // harmony (synth 1)
     let synth = new Tone.DuoSynth({
         volume: -19,
         voice0: {
@@ -87,13 +94,11 @@ let synth4pitch;
         voice1: {
             oscillator: {
                 type: "pulse",
-
               },
-
         },
 
 
-
+// synth 2
       });
     let synth2 = new Tone.Synth({
         volume: -9,
@@ -116,6 +121,7 @@ let synth4pitch;
         } */
       });
 
+// synth 3
     const synth3 = new Tone.Synth({
         volume: -9,
         oscillator: {
@@ -137,7 +143,7 @@ let synth4pitch;
         } */
       });
 
-      // melody synth: 
+// melody synth: 
       let synth4 = new Tone.Synth({
         volume: 1,
         oscillator: {
@@ -159,6 +165,7 @@ let synth4pitch;
         } */
       });
 
+  // Kick and snare
     const synth5 = new Tone.MembraneSynth({
         envelope: {
             attack: 0.9,
@@ -182,42 +189,8 @@ let synth4pitch;
     ).connect(gainNode);
 
 
-    let synth7 = new Tone.DuoSynth({
-      volume: -19,
-      voice0: {
-          oscillator: {
-              type: "fmsawtooth",
-
-            },
-          envelope: {
-              attack: 0.9,
-              decay: 0.3,
-              sustain: 1,
-              release: 0.9,
-          },
-          filter: {
-              Q: 17,
-              frequency: 850,
-
-          },
-      },
-
-      voice1: {
-          oscillator: {
-              type: "pulse",
-
-            },
-
-      },
 
 
-
-    }).connect(gainNode);
-
-// Other Variables
-let newAcc;
-let newAcc2;
-gainNode.gain.value = 0.5;
 
 
   ////////////////////////////
