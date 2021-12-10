@@ -1,66 +1,54 @@
-/* 
-
-MIT License
-
-Copyright (c) 2021 Mari Lesteberg
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.*/
-
-
-// This is the third iteration of the Micro prototypes that were developed for
-// the Micro project at RITMO Centre for Interdisciplinary Studies in Rhythm, 
-// Time and Motion at the University of Oslo and later used as a part of a 
-// Master thesis. 
 // This prototype is an app for android and iOs phones, which uses
-// accelerometer and gyroscope data to control a parts of a random loop. 
+// accelerometer and gyroscoe data to control a loop. 
 // The prototype was developed by Mari Lesteberg 
 // from Janury - June 2021, supported by RITMO / University of Oslo
-// From June-December 2021 further developed as as part of a Master's thesis.
 
-// userAgent for detection of operating system
+
+// Functioning prototype 1: Tone.js 15. February
+// The oscillator version with new code + adding the Tone.js library.
+
+
+// 11. februar: including the Tone.js to improve sound quality
+//1. og 2. mars: creating a loop function
+//16. april: making it work for iOS
+
+// 4. may
+// visuals update and update with the new and better QOM
+
+// 26. mai
+
+// 9. august:
+// working on a new version that is stripped down regarding buttons and attributes. 
+// Will try to enable sound to appear instantly, to enable motion sensor when page is 
+// loaded
+
+// 18. august
+// tidying up, and trying to create a more musical loop rather than random?
+
+// 8. october Finishing the second iteration. applying some viusal feedback.
 var userAgent = navigator.userAgent || navigator.vendor || window.opera;
 
 
 // Tone.js parameters:
 const gainNode = new Tone.Gain().toDestination();
-gainNode.gain.value = 0.5;
+
 const pitchChange = new Tone.PitchShift().connect(gainNode);
 const pingPong = new Tone.PingPongDelay().connect(pitchChange);
 pingPong.wet.value = 0.2;
+//const autoWah = new Tone.Reverb().connect(pingPong);
+//reverb.dampening = 1000;
+
+//reverb.wet.value = 0.2;
 const autoWah = new Tone.AutoWah(100, 5, -10).connect(pingPong);
 autoWah.Q.value = 9;
 autoWah.wet.value = 0.2;
-let synth4pitch;
-let newAcc;
-let newAcc2;
-
-
-// variables for button on and off
 let buttonOn = false;
 let buttonOn2 = false;
 let buttonOn3 = false;
 let buttonOn4 = false;
 let buttonOn5 = false;
 
-/////////////////
-// INSTRUMENTS //
-////////////////
+let synth4pitch;
 
     // bass
     let synth0 = new Tone.AMSynth({
@@ -70,7 +58,7 @@ let buttonOn5 = false;
         },
     });
 
-    // harmony (synth 1)
+    // harmony
     let synth = new Tone.DuoSynth({
         volume: -19,
         voice0: {
@@ -94,11 +82,13 @@ let buttonOn5 = false;
         voice1: {
             oscillator: {
                 type: "pulse",
+
               },
+
         },
 
 
-// synth 2
+
       });
     let synth2 = new Tone.Synth({
         volume: -9,
@@ -120,8 +110,7 @@ let buttonOn5 = false;
           octaves: 4
         } */
       });
-
-// synth 3
+  //  const synth3 = new Tone.PluckSynth();
     const synth3 = new Tone.Synth({
         volume: -9,
         oscillator: {
@@ -143,7 +132,7 @@ let buttonOn5 = false;
         } */
       });
 
-// melody synth: 
+      // melody synth: 
       let synth4 = new Tone.Synth({
         volume: 1,
         oscillator: {
@@ -165,7 +154,6 @@ let buttonOn5 = false;
         } */
       });
 
-  // Kick and snare
     const synth5 = new Tone.MembraneSynth({
         envelope: {
             attack: 0.9,
@@ -189,32 +177,67 @@ let buttonOn5 = false;
     ).connect(gainNode);
 
 
+    let synth7 = new Tone.DuoSynth({
+      volume: -19,
+      voice0: {
+          oscillator: {
+              type: "fmsawtooth",
+
+            },
+          envelope: {
+              attack: 0.9,
+              decay: 0.3,
+              sustain: 1,
+              release: 0.9,
+          },
+          filter: {
+              Q: 17,
+              frequency: 850,
+
+          },
+      },
+
+      voice1: {
+          oscillator: {
+              type: "pulse",
+
+            },
+
+      },
 
 
 
+    }).connect(gainNode);
 
-  ////////////////////////////
-  // Random tone generator  //
-  ////////////////////////////
+// Other Variables
+let newAcc;
+let newAcc2;
+// let inverse = true;
+let is_running = false;
+let demo_button = document.getElementById("start_demo");
 
-  // Inspiration to the Random tone generator is taken from this 
-  // thread: https://codereview.stackexchange.com/questions/203209/random-tone-generator-using-web-audio-api
- 
-// algorithm for converting an integer to a note frequency (source: https://codereview.stackexchange.com/questions/203209/random-tone-generator-using-web-audio-api):
-const freq = note => 2 ** (note / 12) * 440; 
 
-// Arrays for different scales
 
-// Diatonic scales:
+gainNode.gain.value = 0.5;
+  // Random tone generator 
+  const freq = note => 2 ** (note / 12) * 440; // 440 is the frequency of A4
+  // the bitwise Or does the same as Math.floor
+  //const notes = [-12, -10,  -8, -7,  -5, -3 , -1,0, 2, 4, 5, 7, 9, 11, 12]; // Close to your 100, 400, 1600 and 6300
+//   const notes = [7, 9, 12, 14, 16, 19]; 
+//   const notes2 = [0, 2, 4,  7, 9, 12]; 
+//   const notes3 = [-8, -5, -3 ,0, 2, 4]; 
+// const notes3 = [-8, -5, -3 ,0, 2, 4,  7, 9, 12, 14, 16, 19];
+
 const notes3 = [6, 8, 10, 11, 13, 15]; 
 const notes2 = [-4, -2, -1,  1, 3, 5]; 
 const notes = [-18, -16, -14 ,-13, -11, -9, -7, -6];
+
+
 
 const notes3_1 = [5, 7, 9, 10, 12, 14]; 
 const notes2_1 = [-5, -3, -2,  0, 2, 4]; 
 const notes_1 = [-19, -17, -15 ,-14, -12, -10, -8 ,-7]; 
 
-// Pentatonic scales:
 const pentaNotes3 = [3, 6, 8, 11, 13, 15]; 
 const pentaNotes2 = [-8, -6 , -4, -1,  1, 3, 6]; 
 const pentaNotes = [-20, -18, -16, -13 ,-11, -8, -6, -4 ,-1]; 
@@ -223,7 +246,6 @@ const pentaNotes6 = [7, 9, 12, 14, 16, 19];
 const pentaNotes5 = [-0, -2 , 4, 7,  9, 12]; 
 const pentaNotes4 = [-17, -15, -12 ,-10, -8, -5, -3 , 0]; 
 
-// Whole note scales:
 const wholeNotes3 = [10, 12, 14, 16, 18, 20]; 
 const wholeNotes2 = [-2 , 0, 2,  4, 6, 8]; 
 const wholeNotes = [-20 ,-18, -16, -14, -12 ,-10]; 
@@ -238,7 +260,7 @@ const harmNotes2 = [-2, -1, 2, 4, 6, 7, 8];
 const harmNotes = [-12, -11, -8, -6, -4, -3, -2]
 
 
-// Empty arrays to be used in the random generator
+
   let randomArray = [];
   let randomArray2 = [];
   let randomArray3 = [];
@@ -246,11 +268,8 @@ const harmNotes = [-12, -11, -8, -6, -4, -3, -2]
   let randomHiHatArray = [];
   let randomDrumArray = [];
   let randomMelodyArray = [];
-  let scaleNotes = [];
-  let scaleNotes2 = [];
-  let scaleNotes3 = [];
 
-  // Fuctions for creating random integers (source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random).
+  // creating a random rhythm
   function getRandomInt(max) {
     return Math.floor(Math.random() * max);
   }
@@ -260,7 +279,9 @@ const harmNotes = [-12, -11, -8, -6, -4, -3, -2]
   }
 
  
-// Generating random integers
+
+
+
   const random0 = getRandomInt(15) + 2;
   const randomScale = getRandomInt(14);
   const randomTimbre = getRandomInt2(8);
@@ -268,7 +289,9 @@ const harmNotes = [-12, -11, -8, -6, -4, -3, -2]
   const randomTimbre3 = getRandomInt2(8);
   const randomTempo = getRandomInt(12);
 
-// Random selecting between instruments for synth4:
+  console.log(randomTimbre);
+  console.log(randomTimbre2);
+  console.log(randomTimbre3);
   if ((randomTimbre == 0) || ( randomTimbre == 7 ))
   synth4.oscillator.type = "fmsine";
   else if ((randomTimbre == 1) || ( randomTimbre == 6 ))
@@ -281,11 +304,13 @@ const harmNotes = [-12, -11, -8, -6, -4, -3, -2]
       Ab3: "samples/2Ab3.mp3",
       Ab2: "samples/2Ab2.mp3",
     },
-
+  
+  
   });
+  //console.log(randomTimbre, synth4.oscillator.type);
 
 
-// Random selecting between instruments for the synth and synth0:
+// Random musical instrument:
 
 if ((randomTimbre2 == 0) || ( randomTimbre2 == 7 ))
 synth = new Tone.Sampler({
@@ -360,8 +385,7 @@ synth0 = new Tone.Sampler({
 
 
 });
-
-// Random decision of tempo (Beats Per Minute / BPM):
+//console.log(randomTimbre, synth4.oscillator.type);
 
 if ((randomTempo == 0) || ( randomTempo == 5 ))
 Tone.Transport.bpm.value = 40;
@@ -375,7 +399,7 @@ Tone.Transport.bpm.value = 40;
   Tone.Transport.bpm.value = 50;
   
 
-// HTML monitoring of time signature and BPM:
+
 
   document.getElementById("timeSign").innerHTML =
   "Time signature: " + "<br>" + random0 + " / 16";
@@ -383,8 +407,9 @@ Tone.Transport.bpm.value = 40;
   document.getElementById("tempo").innerHTML =
   "BPM: " + "<br>" + Tone.Transport.bpm.value;
 
-
-// Random selection of scales:
+  let scaleNotes = [];
+  let scaleNotes2 = [];
+  let scaleNotes3 = [];
 
   if ((randomScale == 0) || ( randomScale == 13 ))
   scaleNotes = pentaNotes,
@@ -424,6 +449,8 @@ Tone.Transport.bpm.value = 40;
   scaleNotes3 = wholeNotes6,
   document.getElementById("scale").innerHTML =
   "Scale: wholetone2";
+  //console.log(random0);
+  
 
   else if ((randomScale == 6) || ( randomScale == 7 ))
   scaleNotes = pentaNotes4,
@@ -431,8 +458,9 @@ Tone.Transport.bpm.value = 40;
   scaleNotes3 = pentaNotes6,
   document.getElementById("scale").innerHTML =
   "Scale: pentatone2";
+  //console.log(random0);
   
-// Random creation of melody lines
+
   function createRandomness() {
    
     for (var i = 0; i < random0; i += 1) {
@@ -442,6 +470,7 @@ Tone.Transport.bpm.value = 40;
       let random = freq(randomNote());
       randomArray.push(random);
   
+  
       const randomNote2 = () => scaleNotes2[Math.random() * scaleNotes2.length | 0]; 
      let random2 = freq(randomNote2());
      randomArray2.push(random2);
@@ -449,15 +478,19 @@ Tone.Transport.bpm.value = 40;
      const randomNote3 = () => scaleNotes3[Math.random() * scaleNotes3.length | 0]; 
      let random3 = freq(randomNote3());
      randomArray3.push(random3);
+     console.log(randomArray);
+     console.log(random);
 
      const randomNote6 = () => scaleNotes[Math.random() * scaleNotes.length | 0]; 
      let random6 = freq(randomNote6());
      randomArray6.push(random6);
 
-     // getting random numbers
+     
+   
+
      let random4 = getRandomInt(10);
      let random5 = getRandomInt(14);
-
+     let randomMelody = getRandomInt(14);
 
       if (random4 < 4)
       randomHiHatArray.push(("C1 C1").split(" ")),
@@ -528,25 +561,26 @@ function updateFieldIfNotNull(fieldName, value, precision=2){
   }
 
 
-// Function for handling motion
   function handleMotion(event) {
 
        // iOs devices flip the gyroscope axis, so thanks to this thread to be able to adapt
    // to diffrent OSes:
     // https://stackoverflow.com/questions/21741841/detecting-ios-android-operating-system
-   
+    //// Both x and Y axis: multiplying with 5 to get values from 0-100 ////
+    let xDotValues;
+    let yDotValues;
+    let zValue;
+    let xValue = event.acceleration.x; 
+    let yValue = event.acceleration.y; 
 
-
-  if (/windows phone/i.test(userAgent)) {
-     //// Both x and Y axis: multiplying with 5 to get values from 0-100 ////
-    xDotValues = ((event.accelerationIncludingGravity.x + 10) * 5);
-    yDotValues = (((event.accelerationIncludingGravity.y * -1)  + 10) * 5);
-    zValue = event.acceleration.z - 0.3;
+    if (/windows phone/i.test(userAgent)) {
+      xDotValues = ((event.accelerationIncludingGravity.x + 10) * 5);
+      yDotValues = (((event.accelerationIncludingGravity.y * -1)  + 10) * 5);
+      zValue = event.acceleration.z - 0.3;
 
   }
 
   if (/android/i.test(userAgent)) {
-     //// Both x and Y axis: multiplying with 5 to get values from 0-100 ////
     xDotValues = ((event.accelerationIncludingGravity.x + 10) * 5);
     yDotValues = (((event.accelerationIncludingGravity.y * -1)  + 10) * 5);
     zValue = event.acceleration.z - 0.3;
@@ -554,25 +588,17 @@ function updateFieldIfNotNull(fieldName, value, precision=2){
 
   // iOS detection from: http://stackoverflow.com/a/9039885/177710
   if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-     //// Both x and Y axis: multiplying with 5 to get values from 0-100 ////
     xDotValues = (((event.accelerationIncludingGravity.x * -1) + 10) * 5);
     yDotValues = ((event.accelerationIncludingGravity.y  + 10) * 5);
     zValue = event.acceleration.z;
   }
-
 // variables for rotation, GUI monitoring and volume control
-let xDotValues;
-let yDotValues;
-let zValue;
-let xValue = event.acceleration.x; 
-let yValue = event.acceleration.y; 
-    
-// this variable calculate the total quantity of motion:
-let totAcc = (Math.abs(xValue) + Math.abs(yValue) + Math.abs(zValue));
-let elem = document.getElementById("myAnimation"); 
 
-// Updating values to the HTML:
-updateFieldIfNotNull('total_acc', totAcc);
+    
+    let totAcc = (Math.abs(xValue) + Math.abs(yValue) + Math.abs(zValue));
+    let elem = document.getElementById("myAnimation"); 
+ 
+    updateFieldIfNotNull('total_acc', totAcc);
 
     // BPM manipulation with total acc:
 
@@ -830,6 +856,5 @@ updateFieldIfNotNull('total_acc', totAcc);
     
   }}
   );
-
 
 
