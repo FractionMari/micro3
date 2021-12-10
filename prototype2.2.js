@@ -384,6 +384,7 @@ Tone.Transport.bpm.value = 40;
   "BPM: " + "<br>" + Tone.Transport.bpm.value;
 
 
+// Random selection of scales:
 
   if ((randomScale == 0) || ( randomScale == 13 ))
   scaleNotes = pentaNotes,
@@ -423,8 +424,6 @@ Tone.Transport.bpm.value = 40;
   scaleNotes3 = wholeNotes6,
   document.getElementById("scale").innerHTML =
   "Scale: wholetone2";
-  //console.log(random0);
-  
 
   else if ((randomScale == 6) || ( randomScale == 7 ))
   scaleNotes = pentaNotes4,
@@ -432,9 +431,8 @@ Tone.Transport.bpm.value = 40;
   scaleNotes3 = pentaNotes6,
   document.getElementById("scale").innerHTML =
   "Scale: pentatone2";
-  //console.log(random0);
   
-
+// Random creation of melody lines
   function createRandomness() {
    
     for (var i = 0; i < random0; i += 1) {
@@ -444,7 +442,6 @@ Tone.Transport.bpm.value = 40;
       let random = freq(randomNote());
       randomArray.push(random);
   
-  
       const randomNote2 = () => scaleNotes2[Math.random() * scaleNotes2.length | 0]; 
      let random2 = freq(randomNote2());
      randomArray2.push(random2);
@@ -452,8 +449,6 @@ Tone.Transport.bpm.value = 40;
      const randomNote3 = () => scaleNotes3[Math.random() * scaleNotes3.length | 0]; 
      let random3 = freq(randomNote3());
      randomArray3.push(random3);
-     console.log(randomArray);
-     console.log(random);
 
      const randomNote6 = () => scaleNotes[Math.random() * scaleNotes.length | 0]; 
      let random6 = freq(randomNote6());
@@ -464,7 +459,7 @@ Tone.Transport.bpm.value = 40;
 
      let random4 = getRandomInt(10);
      let random5 = getRandomInt(14);
-     let randomMelody = getRandomInt(14);
+
 
       if (random4 < 4)
       randomHiHatArray.push(("C1 C1").split(" ")),
