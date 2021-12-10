@@ -246,6 +246,9 @@ const harmNotes = [-12, -11, -8, -6, -4, -3, -2]
   let randomHiHatArray = [];
   let randomDrumArray = [];
   let randomMelodyArray = [];
+  let scaleNotes = [];
+  let scaleNotes2 = [];
+  let scaleNotes3 = [];
 
   // Fuctions for creating random integers (source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random).
   function getRandomInt(max) {
@@ -265,7 +268,7 @@ const harmNotes = [-12, -11, -8, -6, -4, -3, -2]
   const randomTimbre3 = getRandomInt2(8);
   const randomTempo = getRandomInt(12);
 
-
+// Random selecting between instruments for synth4:
   if ((randomTimbre == 0) || ( randomTimbre == 7 ))
   synth4.oscillator.type = "fmsine";
   else if ((randomTimbre == 1) || ( randomTimbre == 6 ))
@@ -278,13 +281,11 @@ const harmNotes = [-12, -11, -8, -6, -4, -3, -2]
       Ab3: "samples/2Ab3.mp3",
       Ab2: "samples/2Ab2.mp3",
     },
-  
-  
+
   });
-  //console.log(randomTimbre, synth4.oscillator.type);
 
 
-// Random musical instrument:
+// Random selecting between instruments for the synth and synth0:
 
 if ((randomTimbre2 == 0) || ( randomTimbre2 == 7 ))
 synth = new Tone.Sampler({
@@ -359,7 +360,8 @@ synth0 = new Tone.Sampler({
 
 
 });
-//console.log(randomTimbre, synth4.oscillator.type);
+
+// Random decision of tempo (Beats Per Minute / BPM):
 
 if ((randomTempo == 0) || ( randomTempo == 5 ))
 Tone.Transport.bpm.value = 40;
@@ -373,7 +375,7 @@ Tone.Transport.bpm.value = 40;
   Tone.Transport.bpm.value = 50;
   
 
-
+// HTML monitoring of time signature and BPM:
 
   document.getElementById("timeSign").innerHTML =
   "Time signature: " + "<br>" + random0 + " / 16";
@@ -381,9 +383,7 @@ Tone.Transport.bpm.value = 40;
   document.getElementById("tempo").innerHTML =
   "BPM: " + "<br>" + Tone.Transport.bpm.value;
 
-  let scaleNotes = [];
-  let scaleNotes2 = [];
-  let scaleNotes3 = [];
+
 
   if ((randomScale == 0) || ( randomScale == 13 ))
   scaleNotes = pentaNotes,
