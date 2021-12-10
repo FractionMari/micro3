@@ -197,24 +197,24 @@ let buttonOn5 = false;
   // Random tone generator  //
   ////////////////////////////
 
-  const freq = note => 2 ** (note / 12) * 440; // 440 is the frequency of A4
-  // the bitwise Or does the same as Math.floor
-  //const notes = [-12, -10,  -8, -7,  -5, -3 , -1,0, 2, 4, 5, 7, 9, 11, 12]; // Close to your 100, 400, 1600 and 6300
-//   const notes = [7, 9, 12, 14, 16, 19]; 
-//   const notes2 = [0, 2, 4,  7, 9, 12]; 
-//   const notes3 = [-8, -5, -3 ,0, 2, 4]; 
-// const notes3 = [-8, -5, -3 ,0, 2, 4,  7, 9, 12, 14, 16, 19];
+  // Inspiration to the Random tone generator is taken from this 
+  // thread: https://codereview.stackexchange.com/questions/203209/random-tone-generator-using-web-audio-api
+ 
+// algorithm for converting an integer to a note frequency (source: https://codereview.stackexchange.com/questions/203209/random-tone-generator-using-web-audio-api):
+const freq = note => 2 ** (note / 12) * 440; 
 
+// Arrays for different scales
+
+// Diatonic scales:
 const notes3 = [6, 8, 10, 11, 13, 15]; 
 const notes2 = [-4, -2, -1,  1, 3, 5]; 
 const notes = [-18, -16, -14 ,-13, -11, -9, -7, -6];
-
-
 
 const notes3_1 = [5, 7, 9, 10, 12, 14]; 
 const notes2_1 = [-5, -3, -2,  0, 2, 4]; 
 const notes_1 = [-19, -17, -15 ,-14, -12, -10, -8 ,-7]; 
 
+// Pentatonic scales:
 const pentaNotes3 = [3, 6, 8, 11, 13, 15]; 
 const pentaNotes2 = [-8, -6 , -4, -1,  1, 3, 6]; 
 const pentaNotes = [-20, -18, -16, -13 ,-11, -8, -6, -4 ,-1]; 
@@ -223,6 +223,7 @@ const pentaNotes6 = [7, 9, 12, 14, 16, 19];
 const pentaNotes5 = [-0, -2 , 4, 7,  9, 12]; 
 const pentaNotes4 = [-17, -15, -12 ,-10, -8, -5, -3 , 0]; 
 
+// Whole note scales:
 const wholeNotes3 = [10, 12, 14, 16, 18, 20]; 
 const wholeNotes2 = [-2 , 0, 2,  4, 6, 8]; 
 const wholeNotes = [-20 ,-18, -16, -14, -12 ,-10]; 
@@ -237,7 +238,7 @@ const harmNotes2 = [-2, -1, 2, 4, 6, 7, 8];
 const harmNotes = [-12, -11, -8, -6, -4, -3, -2]
 
 
-
+// Empty arrays to be used in the random generator
   let randomArray = [];
   let randomArray2 = [];
   let randomArray3 = [];
@@ -246,7 +247,7 @@ const harmNotes = [-12, -11, -8, -6, -4, -3, -2]
   let randomDrumArray = [];
   let randomMelodyArray = [];
 
-  // creating a random rhythm
+  // Fuctions for creating random integers (source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random).
   function getRandomInt(max) {
     return Math.floor(Math.random() * max);
   }
@@ -256,9 +257,7 @@ const harmNotes = [-12, -11, -8, -6, -4, -3, -2]
   }
 
  
-
-
-
+// Generating random integers
   const random0 = getRandomInt(15) + 2;
   const randomScale = getRandomInt(14);
   const randomTimbre = getRandomInt2(8);
@@ -266,9 +265,7 @@ const harmNotes = [-12, -11, -8, -6, -4, -3, -2]
   const randomTimbre3 = getRandomInt2(8);
   const randomTempo = getRandomInt(12);
 
-  console.log(randomTimbre);
-  console.log(randomTimbre2);
-  console.log(randomTimbre3);
+
   if ((randomTimbre == 0) || ( randomTimbre == 7 ))
   synth4.oscillator.type = "fmsine";
   else if ((randomTimbre == 1) || ( randomTimbre == 6 ))
