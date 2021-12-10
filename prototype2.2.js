@@ -43,10 +43,6 @@ const gainNode = new Tone.Gain().toDestination();
 const pitchChange = new Tone.PitchShift().connect(gainNode);
 const pingPong = new Tone.PingPongDelay().connect(pitchChange);
 pingPong.wet.value = 0.2;
-//const autoWah = new Tone.Reverb().connect(pingPong);
-//reverb.dampening = 1000;
-
-//reverb.wet.value = 0.2;
 const autoWah = new Tone.AutoWah(100, 5, -10).connect(pingPong);
 autoWah.Q.value = 9;
 autoWah.wet.value = 0.2;
@@ -55,7 +51,6 @@ let buttonOn2 = false;
 let buttonOn3 = false;
 let buttonOn4 = false;
 let buttonOn5 = false;
-
 let synth4pitch;
 
     // bass
@@ -66,7 +61,7 @@ let synth4pitch;
         },
     });
 
-    // harmony
+   // harmony (synth 1)
     let synth = new Tone.DuoSynth({
         volume: -19,
         voice0: {
@@ -98,6 +93,7 @@ let synth4pitch;
 
 
       });
+    // synth 2
     let synth2 = new Tone.Synth({
         volume: -9,
         oscillator: {
@@ -118,7 +114,7 @@ let synth4pitch;
           octaves: 4
         } */
       });
-  //  const synth3 = new Tone.PluckSynth();
+  // synth 3
     const synth3 = new Tone.Synth({
         volume: -9,
         oscillator: {
@@ -140,7 +136,7 @@ let synth4pitch;
         } */
       });
 
-      // melody synth: 
+      // melody synth (synth 4): 
       let synth4 = new Tone.Synth({
         volume: 1,
         oscillator: {
@@ -161,7 +157,8 @@ let synth4pitch;
           octaves: 4
         } */
       });
-
+      
+// Kick and snare drum
     const synth5 = new Tone.MembraneSynth({
         envelope: {
             attack: 0.9,
@@ -184,7 +181,7 @@ let synth4pitch;
     }
     ).connect(gainNode);
 
-
+// synth 7
     let synth7 = new Tone.DuoSynth({
       volume: -19,
       voice0: {
@@ -220,19 +217,11 @@ let synth4pitch;
 // Other Variables
 let newAcc;
 let newAcc2;
-
-
-
-
 gainNode.gain.value = 0.5;
+
+
   // Random tone generator 
-  const freq = note => 2 ** (note / 12) * 440; // 440 is the frequency of A4
-  // the bitwise Or does the same as Math.floor
-  //const notes = [-12, -10,  -8, -7,  -5, -3 , -1,0, 2, 4, 5, 7, 9, 11, 12]; // Close to your 100, 400, 1600 and 6300
-//   const notes = [7, 9, 12, 14, 16, 19]; 
-//   const notes2 = [0, 2, 4,  7, 9, 12]; 
-//   const notes3 = [-8, -5, -3 ,0, 2, 4]; 
-// const notes3 = [-8, -5, -3 ,0, 2, 4,  7, 9, 12, 14, 16, 19];
+  const freq = note => 2 ** (note / 12) * 440; 
 
 const notes3 = [6, 8, 10, 11, 13, 15]; 
 const notes2 = [-4, -2, -1,  1, 3, 5]; 
