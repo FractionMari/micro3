@@ -478,8 +478,6 @@ document.getElementById("scale").innerHTML =
      const randomNote3 = () => scaleNotes3[Math.random() * scaleNotes3.length | 0]; 
      let random3 = freq(randomNote3());
      randomArray3.push(random3);
-     console.log(randomArray);
-     console.log(random);
 
      const randomNote6 = () => scaleNotes[Math.random() * scaleNotes.length | 0]; 
      let random6 = freq(randomNote6());
@@ -490,6 +488,7 @@ document.getElementById("scale").innerHTML =
      let random4 = getRandomInt(10);
      let random5 = getRandomInt(14);
 
+     // Generating random rhythm groove and random melody. Selecting notes from the arrays random, random2 and random6
       if (random4 < 4)
       randomHiHatArray.push(("C1 C1").split(" ")),
       randomMelodyArray.push(random);
